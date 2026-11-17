@@ -1,0 +1,9 @@
+services:
+  dobavka:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8086:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./favicon.svg:/usr/share/nginx/html/favicon.svg:ro

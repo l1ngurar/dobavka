@@ -1,0 +1,4108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Добавка</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<style>
+:root{--type-title:25px;--type-heading:17px;--type-body:15px;--type-control:14px;--type-label:13px;--type-meta:12px;--type-context:10px;
+color-scheme:light;--page:#f2f2f7;--surface:#fff;--soft:#f2f2f7;--text:#17171a;--muted:#636366;--line:#dedee5;--blue:#0069dd;--blue-soft:#e7f1ff;--red:#b92529;--green:#14743e}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--page:#101012;--surface:#1c1c1e;--soft:#29292d;--text:#fafafa;--muted:#b1b1b8;--line:#39393e;--blue:#74b4ff;--blue-soft:#21354e;--red:#ff9a9b;--green:#73d19a}}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--text);font:var(--type-body)/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button,input,select{border:1px solid var(--line);border-radius:12px;padding:9px 12px;color:inherit;background:var(--surface)}button{cursor:pointer;font-size:var(--type-control);font-weight:650}button:hover:not(:disabled){border-color:var(--blue)}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:1px solid var(--blue);outline-offset:-1px}.primary{background:#0069dd;color:white;border-color:transparent}.quiet{background:var(--soft);border-color:transparent}.danger{color:var(--red)}.selected{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}[hidden]{display:none!important}
+.shell{min-width:536px;max-width:1000px;margin:auto;padding:28px 28px 40px}.top,.row,.spread,.chips{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.spread,.top{justify-content:space-between}.top{margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px}.icon{display:grid;place-items:center;background:#007aff;color:white;width:46px;height:46px;border-radius:14px}.icon svg{width:26px}.title{margin:0;font-size:var(--type-title);letter-spacing:-.04em}.muted,small{color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(504px,1.65fr) minmax(300px,1fr);gap:18px;align-items:start}.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:19px;margin-bottom:16px}.card h2,.card h3{margin:0;font-size:var(--type-heading)}.field{display:grid;gap:5px;margin-top:14px}.field>span,.label{font-size:var(--type-label);font-weight:650;color:var(--muted)}.setup{display:grid;align-items:start;grid-template-columns:minmax(0,1fr)}.wide{grid-column:1/-1}.chips button{padding:6px 11px}.chips button.selected:disabled{opacity:1}.setup select:disabled{opacity:1;color:var(--text)}.scan-station{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.scan{padding:13px 14px 11px;border-radius:16px 16px 0 0;background:var(--soft)}
+.scan-results{padding:11px 14px 12px;border-top:1px solid var(--line)}.card .scan-results-title{font-size:var(--type-control)}
+.scan label{display:block;font-size:var(--type-label);font-weight:700}
+.scan form{display:flex;gap:8px;margin-top:7px}
+.scan input{flex:1;min-width:0;padding:8px 11px;font:600 var(--type-body) ui-monospace,Consolas,monospace}
+.scan input::placeholder{color:var(--muted);font:400 var(--type-control) -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+input:not([type=checkbox]):focus,select:focus{outline:0;border-color:var(--blue)}
+.scan form button{padding:7px 13px;flex:none}
+.scan-feedback{display:grid;align-items:center;min-height:20px;margin-top:7px}
+.scan-feedback>*{grid-area:1/1}
+.scan-help{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font-size:var(--type-meta)}
+.scan-help kbd,.error-control kbd{display:inline-block;margin-right:4px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--surface);font:inherit;font-weight:650;color:var(--text)}
+.scan-error{font-size:var(--type-meta);color:var(--red);font-weight:650}
+.scan-feedback:has(.scan-error:not(:empty)) .scan-help{visibility:hidden}
+@media(prefers-reduced-motion:no-preference){
+  .scan,.scan input{transition:border-color 180ms ease,box-shadow 180ms ease}
+}
+.start-preview .scan input::placeholder{color:transparent}.badge{display:inline-block;border-radius:999px;padding:3px 9px;background:var(--soft);font-size:var(--type-label);font-weight:650}.items{list-style:none;padding:0;margin:8px 0 0;max-height:215px;overflow:auto}.item{padding:8px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.item button{padding:5px 9px}.mono{font-family:ui-monospace,Consolas,monospace}.stack{margin-top:12px}.stack details{border-top:1px solid var(--line);padding:10px 0}.stack details:first-child{border:0}.stack summary{cursor:pointer;font-weight:650}.stack p{margin:6px 0}.actions{margin-top:13px}.notice{min-height:1.4em;margin-top:8px;color:var(--green)}.notice.error{color:var(--red)}.history-list{display:grid;gap:12px}.history-list .card{margin:0}.history-items{overflow-wrap:anywhere}dialog{width:min(640px,92vw);max-height:80vh;border:1px solid var(--line);border-radius:20px;padding:22px;background:var(--surface);color:var(--text)}dialog::backdrop{background:#0007}
+@media(width < 879px){.shell{max-width:680px;padding:16px}.layout{grid-template-columns:1fr}.top{margin-bottom:15px}}
+.model-field{position:relative}.model-field input{width:100%}.options{position:absolute;z-index:5;top:100%;left:0;width:min(100%,16rem);max-height:260px;overflow:auto;scrollbar-gutter:stable;margin:5px 0 0;padding:5px 10px 5px 5px;list-style:none;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 8px 24px #0002}.options li{padding:7px 10px;border-radius:8px;cursor:pointer}.options li[aria-selected=true],.options li:hover{background:var(--blue-soft);color:var(--blue)}.title-button,.supplier-name{padding:0;border:0;background:none;text-align:left}.title-button:hover{text-decoration:underline;text-decoration-color:var(--blue)}button.supplier-name:hover{background:var(--blue-soft);border-radius:5px}.supplier-line{display:flex;align-items:center;gap:9px;min-height:34px;margin:5px 0;padding:4px 8px;border-radius:8px;color:var(--muted);box-shadow:inset 0 0 0 1px transparent}.supplier-line::after{content:"";flex:1;border-top:1px solid var(--line)}.supplier-line.active{color:var(--blue)}.supplier-name{font-size:var(--type-label)}.batch-line{padding:5px 0}.batch-name{overflow-wrap:anywhere}.batch-active{color:var(--blue)}.rename-mark{font-size:.6em;margin-left:7px;color:var(--muted);vertical-align:middle}
+.title-input{width:min(420px,62vw);font:inherit;letter-spacing:inherit;padding:3px 8px}.imei-edit{flex:1;min-width:0}.imei-edit input{flex:1 1 22ch;width:22ch;min-width:min(100%,21ch);max-width:min(100%,28ch);padding:5px 8px}.imei-edit .notice{flex-basis:100%;min-height:0;margin:0}.imei-edit .notice:empty{display:none}
+@media (prefers-reduced-motion: no-preference) {
+  .title-input:not([hidden]) { animation: editor-appear 160ms ease-out; }
+  @keyframes editor-appear {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+#workTitle{overflow-wrap:anywhere}.top .brand{min-width:0}.top .brand>div:last-child{min-width:0}
+.placeholder-label{color:transparent;background:linear-gradient(var(--line),var(--line)) left center / 100% .45em no-repeat}
+.start-preview input,.start-preview input::placeholder{color:transparent}
+.start-preview input{background-image:linear-gradient(var(--line),var(--line));background-position:12px center;background-size:36% 7px;background-repeat:no-repeat}
+.start-preview .badge,.start-preview button:not(.start-action){color:transparent;background:var(--soft);border-color:transparent}
+.start-preview .actions{position:relative}
+.start-preview .actions:has(>.resume-action){height:46px}
+.start-preview .start-action{position:absolute;inset:0 auto 0 0;max-width:100%;display:flex;align-items:center;gap:8px}
+.start-preview .start-action.resume-action{width:min(100%,280px);flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:3px 12px;line-height:1.15;text-align:left}
+.resume-action .resume-label{white-space:nowrap}
+.resume-action small{display:block;width:100%;color:inherit;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--type-meta);font-weight:500}
+@media (prefers-reduced-motion: no-preference) {
+  #workspace .card { position: relative; }
+  .panel-leaving[hidden] {
+    display: block !important;
+    position: absolute;
+    inset: 19px;
+    pointer-events: none;
+    overflow: hidden;
+    animation: leave-panel 150ms ease-out forwards;
+  }
+  .panel-entering { animation: enter-panel 220ms ease-out both; }
+  @keyframes leave-panel {
+    to { opacity: 0; visibility: hidden; }
+  }
+  @keyframes enter-panel {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+.nav-icon{display:grid;place-items:center;width:46px;height:46px;padding:0;border-radius:14px;color:var(--muted);background:var(--surface)}
+.nav-icon svg{width:24px;height:24px}
+.nav-icon[aria-current="page"]{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+@media (prefers-reduced-motion: no-preference) {
+  .nav-icon{transition:color .25s,background-color .25s,border-color .25s}
+  .screen-arriving { animation: screen-slide-in 300ms ease both; }
+  @keyframes screen-slide-in {
+    from { opacity: 0; transform: translateX(var(--screen-offset)); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+}
+.top .brand { gap: 0; min-height: 46px; }
+.home-slot { flex: none; width: 0; opacity: 0; overflow: hidden; }
+.home-slot.open { width: 58px; opacity: 1; }
+.home-slot:focus-within { overflow: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .home-slot { transition: width .3s cubic-bezier(.4,0,.2,1), opacity .2s ease; }
+}
+#clearDraft{color:var(--red)}#clearDraft:hover{border-color:var(--red)}
+.top .title-button{font-size:inherit;letter-spacing:inherit;font-weight:inherit}
+.model-field>.model-entry{position:relative;display:block;font:inherit;color:var(--text)}
+.memory-ghost{position:absolute;inset:1px;display:flex;align-items:center;overflow:hidden;padding:0 12px;white-space:pre;pointer-events:none;color:var(--muted);opacity:0}
+.memory-ghost.visible{opacity:1}
+.memory-ghost .typed{color:transparent}
+#model.part-completion{color:transparent;caret-color:var(--text)}
+.memory-ghost .committed{color:var(--text)}
+@media(prefers-reduced-motion:no-preference){.memory-ghost{transition:opacity 140ms ease}}
+@media (prefers-reduced-motion: no-preference) {
+  .chips button { transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+}
+.scan-item{padding:6px 9px;margin:4px 0;border:0;border-radius:10px;background:var(--soft);gap:8px}
+.scan-item .scan-code{font-size:var(--type-body);font-weight:650;background:transparent;border-color:transparent;padding:4px 6px;letter-spacing:.04em}
+.scan-item .scan-code:hover{border-color:var(--line);color:var(--blue)}
+.scan-item .remove-scan{padding:0;width:28px;height:28px;font-size:19px;line-height:1;color:var(--muted);background:transparent}
+.scan-item .remove-scan:hover{color:var(--red)}
+.supplier-edit{font-size:var(--type-label);min-width:0;width:min(210px,75%);padding:4px 8px}
+.batch-line.editing{background:var(--blue-soft);border-radius:10px;padding-inline:8px}
+.model-entry input{padding-right:40px}
+.memory-ghost{right:36px}
+.clear-model,.scan .clear-scan{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:30px;height:30px;padding:0;line-height:1;font-size:19px;background:transparent;border-color:transparent;color:var(--muted)}
+.clear-model:hover,.scan .clear-scan:hover{color:var(--red)}
+.scan-entry{position:relative;flex:1;min-width:0}
+.scan-entry input{width:100%;padding-right:39px}
+.title-input{border-radius:7px;padding:0 6px;font-weight:inherit;border-color:transparent;background:var(--blue-soft);max-width:100%}
+#workTitle .title-input{box-sizing:content-box}
+.scan-item{position:relative;min-height:44px}
+.imei-flight{position:fixed;z-index:15;pointer-events:none;padding:2px 6px;border-radius:6px;background:var(--blue-soft);color:var(--blue);font:650 var(--type-body)/1.45 ui-monospace,Consolas,monospace;letter-spacing:.04em}
+.scan-item .imei-edit input,.scan-item .imei-edit button{padding-block:4px}
+.scan-item .imei-edit input{font-weight:650;letter-spacing:.04em}
+.batch-line{padding:4px 8px;min-height:34px;border-radius:10px;background:var(--soft)}
+.batch-line button{padding:2px 4px;border-color:transparent;background:transparent;font-size:var(--type-label);color:var(--muted)}
+.batch-line button:hover{color:var(--blue)}
+.config-buffer-slot{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden}
+.config-buffer-slot.has-buffer{grid-template-rows:1fr;opacity:1;visibility:visible}
+.config-buffer-inner{overflow:hidden;min-height:0;padding-inline:3px;margin-inline:-3px}
+.config-buffer{max-width:100%;text-align:left;overflow-wrap:anywhere;font-size:var(--type-label);padding:5px 9px;margin-block:8px 4px}
+@media(prefers-reduced-motion:no-preference){
+  .config-buffer-slot{transition:grid-template-rows 210ms ease,opacity 160ms ease,visibility 0s 210ms}
+  .config-buffer-slot.has-buffer{transition-delay:0s}
+}
+.supplier-line .undo-supplier{order:1;padding:0 5px;border:0;background:transparent;color:var(--muted);font-size:16px;line-height:1.3}
+.supplier-line .undo-supplier:hover{color:var(--red)}
+.batch-selection{display:flex;align-items:center;gap:8px;min-width:0}
+.batch-select{margin:0;accent-color:var(--blue);cursor:pointer}
+.batch-line[draggable=true]{cursor:grab}
+.batch-line.batch-selected,.supplier-line.drop-target{background:var(--blue-soft)}
+.supplier-line.drop-target{min-height:44px;box-shadow:inset 0 0 0 1px var(--blue)}
+@media(prefers-reduced-motion:no-preference){.supplier-line{transition:min-height 180ms ease,background-color 160ms ease,box-shadow 160ms ease}}
+.action-toast{width:max-content;pointer-events:none;max-width:min(340px,100%);padding:7px 11px;border:1px solid var(--line);border-left:3px solid var(--green);border-radius:10px;background:var(--surface);color:var(--text);box-shadow:0 5px 18px #0002;font-size:var(--type-label);font-weight:650;overflow-wrap:anywhere}
+.action-toast.in-gutter{position:fixed;z-index:20;max-width:min(340px,var(--gutter-width))}
+.action-toast.error{border-left-color:var(--red)}
+.batch-travel{position:fixed;z-index:10;pointer-events:none}
+.header-caption{display:grid;align-items:center;overflow:hidden}
+.header-caption>*{grid-area:1/1}
+.header-context{font-size:var(--type-context);font-weight:700;text-transform:uppercase;color:#007aff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;display:block}
+@media(prefers-color-scheme:dark){.header-context{color:#0a84ff}}
+.header-context{opacity:0;transform:translateY(100%);visibility:hidden}
+.header-caption.in-work #homeCaption{opacity:0;transform:translateY(-100%);visibility:hidden}
+.header-caption.in-work .header-context{opacity:1;transform:translateY(0);visibility:visible}
+@media(prefers-reduced-motion:no-preference){
+  .header-caption>*{transition:transform 270ms cubic-bezier(.22,.72,.25,1),opacity 230ms ease,visibility 0s 270ms}
+  .header-caption:not(.in-work) #homeCaption,.header-caption.in-work .header-context{transition-delay:0s}
+}
+.history-card{position:relative;gap:12px;cursor:pointer}
+.history-card:hover,.history-card:focus-within{border-color:var(--blue)}
+.history-card.is-selected{border-color:var(--blue);background:color-mix(in srgb,var(--surface) 72%,var(--blue-soft))}
+.history-summary{min-width:0;flex:1}
+.history-open{border:0;background:transparent;padding:0;text-align:left;overflow-wrap:anywhere}
+.history-actions{gap:5px}
+.icon-action{display:grid;place-items:center;width:34px;height:34px;padding:0;background:transparent;border-color:transparent;border-radius:9px}
+.icon-action:hover{background:var(--soft)}
+.icon-action svg{width:17px;height:17px}
+.history-check-hit{display:grid;place-items:center;flex:none;width:40px;height:40px;margin-left:-5px;border-radius:9px;cursor:pointer}
+.history-check-hit:hover{background:var(--soft)}
+.history-check{width:21px;height:21px;margin:0;padding:0;accent-color:var(--blue);cursor:pointer}
+.history-selection{display:inline-flex;align-items:center;gap:5px;padding-right:8px;border-right:1px solid var(--line)}
+.history-selection #historySelectedCount{color:var(--muted);white-space:nowrap}
+.history-removing{position:fixed;z-index:10;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+  .history-card{transition:background-color 180ms ease,border-color 180ms ease}
+  .history-selection:not([hidden]){animation:history-tools-in 200ms ease-out both}
+  #detail[open]::backdrop{animation:history-backdrop-in 240ms ease-out both}
+  @keyframes history-tools-in{from{transform:translateX(6px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes history-backdrop-in{from{background:#0000}to{background:#0007}}
+}
+#detail{width:min(920px,94vw);max-height:88vh}
+#detail>.detail-header{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px}
+#detailTitle{margin:0;overflow-wrap:anywhere}
+#closeDetail{white-space:nowrap}
+#detailBody{overflow:auto;max-height:60vh;margin-top:16px;border:1px solid var(--line);border-radius:12px}
+.history-table{width:100%;border-collapse:separate;border-spacing:0;text-align:left;font-size:var(--type-label)}
+.history-table th,.history-table td{padding:8px 11px;border-bottom:1px solid var(--line)}
+.history-table th{position:sticky;top:0;background:var(--soft);z-index:1}
+.history-table td:nth-child(3){white-space:nowrap}
+.history-table td:last-child,.history-table th:last-child{text-align:center}
+.history-table .history-separator td{height:19px;padding:0;background:var(--soft)}
+.history-table tbody tr:last-child td{border-bottom:0}
+.backup-actions{position:relative}
+.backup-menu{position:absolute;z-index:25;top:calc(100% + 8px);right:0;width:min(268px,calc(100vw - 32px));display:grid;gap:6px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px #0003}
+.backup-menu button{text-align:left}
+.backup-menu small{padding:3px 5px}
+@media(prefers-reduced-motion:no-preference){
+  .backup-menu:not([hidden]){animation:backup-menu-in 220ms cubic-bezier(.22,.72,.25,1) both;transform-origin:top right}
+  @keyframes backup-menu-in{from{transform:translateY(-4px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+}
+.nav-tools{display:grid;width:46px;height:46px;flex:none;position:relative}
+.nav-tools>.nav-tool{grid-area:1/1;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px) scale(.94)}
+.nav-tools>.nav-tool.is-active{opacity:1;visibility:visible;pointer-events:auto;transform:none;z-index:2}
+@media(prefers-reduced-motion:no-preference){
+  .nav-tools>.nav-tool{transition:transform 240ms cubic-bezier(.22,.72,.25,1),opacity 180ms ease,visibility 0s 240ms}
+  .nav-tools>.nav-tool.is-active{transition-delay:0s}
+}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{border:2px solid transparent;border-radius:10px;background:color-mix(in srgb,var(--muted) 42%,transparent);background-clip:padding-box}
+*::-webkit-scrollbar-thumb:hover{background-color:color-mix(in srgb,var(--muted) 68%,transparent)}
+*::-webkit-scrollbar-corner{background:transparent}
+@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:var(--muted) transparent}}
+.scan-item:hover,.scan-item:focus-within{background:color-mix(in srgb,var(--soft) 62%,var(--blue-soft))}
+.supplier-empty{display:block}
+.divider-footer{padding-top:9px}
+.divider-cancel-panel{display:grid;grid-template-rows:0fr;visibility:hidden;opacity:0}
+.divider-cancel-clip{min-height:0;overflow:hidden}
+.divider-cancel-zone{display:grid;place-items:center;min-height:64px;margin-top:8px;padding:10px;border:1px dashed color-mix(in srgb,var(--red) 65%,transparent);border-radius:11px;background:color-mix(in srgb,var(--red) 7%,var(--surface));text-align:center;font-size:var(--type-label);font-weight:650;color:var(--red)}
+.divider-dragging .divider-cancel-panel{grid-template-rows:1fr;visibility:visible;opacity:1}
+.divider-dragging.divider-cancel-target .divider-cancel-zone{background:color-mix(in srgb,var(--red) 18%,var(--surface));border-color:var(--red)}
+.divider-handle{padding:6px 11px;font-size:var(--type-label);white-space:nowrap}
+.divider-handle[draggable=true]{cursor:grab}
+.divider-handle[draggable=true]:active{cursor:grabbing}
+@media(prefers-reduced-motion:no-preference){
+  .divider-cancel-panel{transition:grid-template-rows 230ms cubic-bezier(.22,.72,.25,1),opacity 180ms ease,visibility 0s 230ms}
+  .divider-dragging .divider-cancel-panel{transition-delay:0s}
+  .divider-cancel-zone{transition:background-color 160ms ease,border-color 160ms ease}
+}
+.divider-slot{height:4px;position:relative;pointer-events:none}
+.divider-slot.is-drop-point{height:38px}
+.divider-slot::before{content:"Новый поставщик";position:absolute;inset:3px 0;display:flex;align-items:center;padding-inline:10px;border:1px dashed var(--blue);border-radius:9px;background:var(--blue-soft);color:var(--blue);font-size:var(--type-label);font-weight:650;opacity:0}
+.divider-slot.is-drop-point::before{opacity:1}
+@media(prefers-reduced-motion:no-preference){
+  .scan-item,.scan-code,.remove-scan{transition:background-color 190ms ease,border-color 190ms ease,color 190ms ease}
+  .options:not([hidden]){animation:model-options-in 220ms cubic-bezier(.22,.72,.25,1) both;transform-origin:top center}
+  @keyframes model-options-in{from{opacity:0;transform:translateY(-5px) scaleY(.97)}to{opacity:1;transform:none}}
+  .divider-slot{transition:height 180ms ease}
+  .divider-slot::before{transition:opacity 160ms ease}
+}
+.batch-line{min-height:38px}
+.batch-line .batch-selection{flex:1}
+.batch-line .batch-select{flex:none}
+
+.card.batch-card-out{position:fixed;z-index:12;pointer-events:none;overflow:hidden;margin:0;transform-origin:center 32%;box-shadow:0 8px 24px #0002}
+.scan-list{overflow-anchor:none;margin-top:7px;padding:0 0 1px}.scan-tools{margin-top:9px;gap:6px;flex-wrap:nowrap}.scan-tools button{flex:none;white-space:nowrap;min-height:36px;padding:7px 10px;font-size:var(--type-control)}
+.scan-list .scan-item{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;margin:0;border:1px solid color-mix(in srgb,var(--line) 70%,transparent);background:var(--surface)}
+.scan-list .scan-item .scan-code{min-width:0;white-space:nowrap}
+.scan-list .scan-item .remove-scan{flex:none;display:grid;place-items:center}
+.remove-scan::before,.remove-scan::after,.clear-model::before,.clear-model::after,.clear-scan::before,.clear-scan::after{content:"";grid-area:1/1;width:11px;height:2px;border-radius:1px;background:currentColor;transform:rotate(45deg)}
+.remove-scan::after,.clear-model::after,.clear-scan::after{transform:rotate(-45deg)}
+.clear-model,.scan .clear-scan{display:grid;place-items:center}
+button:is(.remove-scan,.clear-model,.clear-scan):hover:not(:disabled){border-color:transparent}
+button:is(.remove-scan,.clear-model,.clear-scan):focus-visible{outline-color:var(--muted)}
+.scan-list .scan-item+.scan-item{margin-top:6px}
+.scan-list .scan-item:hover,.scan-list .scan-item:focus-within{background:color-mix(in srgb,var(--surface) 77%,var(--blue-soft))}
+.scan-empty{padding:8px 10px;font-size:var(--type-label)}
+[data-scan-jump]{display:inline-flex;align-items:center;gap:5px}[data-scan-jump] svg{width:16px;height:16px;flex:none}
+.scroll-fade{
+  mask-image:linear-gradient(to bottom,transparent,black var(--fade-top,0px),
+    black calc(100% - var(--fade-bottom,0px)),transparent);
+}
+small{font-size:var(--type-meta)}
+#workspace .card:has(>#workLeft:not([hidden])),
+.supplier-card:has(>#workRight:not([hidden])){
+  display:flex;
+  flex-direction:column;
+  max-height:var(--workspace-card-limit,calc(100dvh - 110px));
+  overflow-y:auto;
+}
+#workLeft:not([hidden]),.supplier-work-layout:not([hidden]){
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+#workLeft>.spread,#workLeft>.setup,#workLeft>.actions,
+.supplier-work-layout>.spread,.supplier-work-layout>.actions{flex:none}
+#workLeft>.scan-station,#workLeft .scan-results{display:flex;flex-direction:column;min-height:0}
+#workLeft .scan,#workLeft .scan-results-title,#workLeft .scan-tools{flex:none}
+#workLeft>.scan-station{min-height:210px}
+#workLeft .scan-list{min-height:44px;overscroll-behavior-y:contain}
+.supplier-work-layout>.stack{min-height:40px;overflow-y:auto;overscroll-behavior-y:contain}
+@media(min-width:879px){
+  .supplier-card:has(>#workRight:not([hidden])){
+    max-height:min(var(--workspace-card-limit,calc(100dvh - 110px)),var(--left-card-height,100dvh));
+  }
+}
+.model-label-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.model-label-row .error-flag{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border:0;background:transparent;color:var(--muted);font-size:var(--type-label);line-height:1.3}
+.error-control{display:inline-flex;align-items:center;font-size:var(--type-label);line-height:1.3}
+.error-control:has(.error-flag:disabled) kbd{opacity:.45}
+.start-preview .error-control kbd{visibility:hidden}
+.error-flag::before{content:"";width:10px;height:10px;border:1px solid currentColor;border-radius:50%}
+.error-flag[aria-pressed=true]{color:#805a00}
+@media(prefers-color-scheme:dark){.error-flag[aria-pressed=true]{color:#ffd15c}}
+.error-flag[aria-pressed=true]::before{background:currentColor}
+#appConfirm{width:min(440px,92vw)}
+#appConfirm h2{margin:0;font-size:var(--type-heading)}
+#appConfirmMessage{white-space:pre-line;overflow-wrap:anywhere;margin:10px 0 18px;color:var(--muted)}
+#appConfirm .row{justify-content:flex-end}
+.confirm-danger{background:var(--red);color:var(--surface);border-color:transparent}
+@media(prefers-reduced-motion:no-preference){
+  #appConfirm[open]{animation:confirm-in 240ms cubic-bezier(.22,.72,.25,1) both}
+  @keyframes confirm-in{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+}
+.color-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:stretch}
+.color-grid:has(> button:last-child:is(:nth-child(2),:nth-child(4))){grid-template-columns:repeat(2,minmax(0,1fr));width:calc((100% - 4px) * 2 / 3)}
+.color-grid button{min-width:0;padding-inline:8px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.color-grid>small{grid-column:1/-1}
+.color-grid:has(>button:nth-child(7)){grid-auto-rows:36px;max-height:80px;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-gutter:stable;padding-inline-end:5px}
+.batch-line{flex-wrap:nowrap}
+.batch-check-hit{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:8px}
+.batch-check-hit{cursor:pointer}
+.batch-check-hit:hover,.batch-check-hit:focus-within{background:var(--surface)}
+.batch-check-hit .batch-select{width:17px;height:17px;padding:0}
+.batch-actions{display:flex;align-items:center;gap:2px;flex:none}
+.batch-actions .icon-action{width:34px;height:34px;padding:0}
+.batch-actions .icon-action.danger:hover{color:var(--red)}
+@media(hover:hover) and (pointer:fine){
+  .batch-actions{opacity:0;pointer-events:none}
+  .batch-line:hover .batch-actions,.batch-line:focus-within .batch-actions{opacity:1;pointer-events:auto}
+}
+@media(prefers-reduced-motion:no-preference){.batch-actions{transition:opacity 160ms ease}}
+.batch-quantity{white-space:nowrap}
+[data-search-match]{scroll-margin:42px;outline:1px solid var(--blue);outline-offset:-1px;background:var(--blue-soft)}
+.search-hit-imei{display:block;width:max-content;max-width:100%;margin-top:3px;padding:1px 4px;border-radius:4px}
+.history-table .search-supplier-cell{font-weight:650}
+.batch-check-hit:has(input:disabled){opacity:.42;cursor:default;background:transparent}
+.batch-check-hit input:disabled{cursor:default}
+#searchDialog{width:min(680px,94vw)}
+.summary-heart{display:inline-grid;place-items:center;flex:none;width:40px;height:40px;border-radius:12px;padding:0;background:#38383f;color:#fff;font:23px/1 "Segoe UI Symbol",sans-serif}
+#summaryTitle{width:46px;height:46px;margin:0;background:#38383f;color:#fff}
+#summaryDialog{width:min(520px,92vw);padding:18px;box-shadow:0 20px 60px #0005}
+.summary-preview{display:block;width:100%;margin-top:14px;padding:12px 14px;max-height:42vh;resize:none;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--page);color:var(--text);font:600 var(--type-body)/1.65 ui-monospace,Consolas,monospace}
+.summary-footer{justify-content:space-between}
+#summaryHint{margin:12px 0 0;font-size:var(--type-label)}
+#summaryStatus{flex:1}
+#searchTitle{margin:0}
+.search-entry{position:relative;margin-top:14px}
+#searchQuery{width:100%;padding-right:40px}
+.history-heading{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.history-copy-number{color:var(--blue);background:var(--blue-soft);font-size:var(--type-meta);white-space:nowrap}
+#searchSummary{margin:10px 0;font-size:var(--type-label)}
+#searchResults{display:grid;gap:5px;max-height:48vh;overflow:auto}
+.search-result{display:grid;gap:3px;width:100%;text-align:left;overflow-wrap:anywhere}
+.scan-clear-preview{position:fixed;z-index:14;margin:0;pointer-events:none;overflow:hidden}
+@media(prefers-reduced-motion:no-preference){
+  #searchDialog[open]{animation:confirm-in 230ms cubic-bezier(.22,.72,.25,1) both}
+}
+.batch-line .batch-preview-button{display:block;min-width:0;padding:0;border:0;background:transparent;text-align:left;font:inherit;color:inherit;overflow-wrap:anywhere}
+.batch-line:not(.batch-selected):has(.batch-preview-button):hover{background:color-mix(in srgb,var(--soft) 56%,var(--blue-soft))}
+.search-hit-slot{display:block;overflow:hidden}
+#detail.is-batch-preview{width:min(520px,94vw)}
+#detailContext{margin:5px 0 0}
+.batch-preview-list{margin:0;padding:4px 14px;list-style:none}
+.batch-preview-list li{padding:8px 0;border-bottom:1px solid var(--line)}
+.batch-preview-list li:last-child{border-bottom:0}
+.batch-summary{display:grid;justify-items:end;align-items:center;min-height:34px;overflow:hidden}
+.batch-summary>*{grid-area:1/1}
+.batch-selection-tools{display:flex;align-items:center;gap:5px;opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none}
+.batch-summary.has-selection>.badge{opacity:0;visibility:hidden;transform:translateY(-8px)}
+.batch-summary.has-selection>.batch-selection-tools{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+.batch-selection-tools .icon-action{color:var(--red)}
+.supplier-line .batch-check-hit{width:26px;height:26px;margin-left:-2px}
+@media(prefers-reduced-motion:no-preference){
+  .batch-summary>*{transition:transform 230ms cubic-bezier(.22,.72,.25,1),opacity 180ms ease,visibility 0s 230ms}
+  .batch-summary:not(.has-selection)>.badge,.batch-summary.has-selection>.batch-selection-tools{transition-delay:0s}
+}
+.detail-metadata{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:10px;color:var(--muted);font-size:var(--type-label);font-variant-numeric:tabular-nums}
+.detail-metrics{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.detail-metrics .badge{font-size:var(--type-label);font-weight:500}
+.detail-metrics strong{margin-left:3px;color:var(--text);font-weight:700}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top">
+<div class="brand">
+<div id="homeSlot" class="home-slot" inert><button id="workTab" class="icon nav-icon" aria-label="На главную" title="На главную"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v11h5v-6h4v6h5V9"/></svg></button><button id="historyBack" class="icon nav-icon" aria-label="Назад" title="Назад" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button></div>
+<div><h1 class="title"><span id="appTitle">Добавка</span><span id="workTitle" hidden><button class="title-button" id="draftName" title="Переименовать файл"><span id="draftTitle"></span><span class="rename-mark" aria-hidden="true">✎</span></button><input id="draftNameInput" class="title-input" aria-label="Название добавки" maxlength="100" hidden></span></h1><div class="header-caption">
+<small id="homeCaption">Сканирование поставок для Hello Client</small>
+<span id="draftContext" class="header-context" aria-hidden="true"></span>
+</div></div>
+</div>
+<nav class="row" aria-label="Разделы">
+<div id="historySelection" class="history-selection" hidden><small id="historySelectedCount" role="status"></small></div>
+<div class="nav-tools">
+<button id="importXlsx" class="nav-icon nav-tool" aria-label="Импорт XLSX" title="Импорт XLSX" inert><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></svg></button>
+<input id="importXlsxFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+<div id="backupActions" class="backup-actions nav-tool" inert>
+<button id="backupMenuButton" class="nav-icon" aria-label="Резервная копия" title="Резервная копия" aria-expanded="false" aria-controls="backupMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8v12h16V8M3 4h18v4H3zM10 12h4"/></svg></button>
+<div id="backupMenu" class="backup-menu" hidden>
+<button id="backup" class="quiet">Скачать резервную копию</button>
+<button id="restore" class="quiet">Восстановить из файла</button>
+<small>Копия включает историю, текущий черновик, имена поставщиков и IMEI.</small>
+</div>
+<input id="backupFile" type="file" accept=".json,application/json" hidden>
+</div><button id="clearDraft" class="nav-icon nav-tool" aria-label="Очистить добавку" title="Очистить добавку" inert><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button></div><button id="openSearch" class="nav-icon" aria-label="Поиск" title="Поиск (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></button><button id="historyTab" class="nav-icon" aria-label="История" title="История"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></button></nav>
+</header>
+<section id="workspace" class="layout" hidden>
+<div>
+<section class="card" aria-label="Текущая партия">
+<div id="startLeft" hidden></div>
+<div id="workLeft">
+<div class="spread"><h2 id="batchHeading">Текущая партия</h2><button id="clearParty" class="quiet danger">Очистить партию</button></div>
+<div class="setup">
+<div class="field wide model-field"><div class="model-label-row"><label class="label" for="model">Название трубки</label><span class="error-control"><kbd aria-hidden="true">Ctrl+E</kbd><button id="markError" class="error-flag" type="button" aria-keyshortcuts="Control+E" title="Ctrl+E" aria-pressed="false">Ошибка</button></span></div><span class="model-entry"><input id="model" role="combobox" aria-autocomplete="both" aria-controls="modelOptions" aria-expanded="false" autocomplete="off" placeholder="Начни вводить модель, например 16 Pro"><span id="memoryGhost" class="memory-ghost" aria-hidden="true"><span id="memoryGhostText"></span></span><button type="button" id="clearModel" class="clear-model" aria-label="Очистить название трубки" title="Очистить название трубки"></button></span><ul class="options" id="modelOptions" role="listbox" hidden></ul></div>
+<div id="configBufferSlot" class="wide config-buffer-slot" inert><div class="config-buffer-inner"><button id="configBuffer" class="quiet config-buffer"></button></div></div>
+<div class="field"><span>Память</span><div class="chips" id="memories"></div></div>
+<div class="field"><span>Цвет</span><div class="chips color-grid" id="colors"></div></div>
+</div>
+<section class="scan-station" aria-label="Сканирование и сканы партии">
+<div class="scan">
+<label for="scan">Сканирование IMEI</label>
+<form id="scanForm"><div class="scan-entry"><input id="scan" autocomplete="off" inputmode="numeric" placeholder="Сканируй или введи 15 цифр" aria-describedby="scanHelp scanNotice"><button id="clearScanInput" type="button" class="clear-scan" aria-label="Очистить поле IMEI" title="Очистить поле IMEI"></button></div><button type="submit" class="primary">Добавить</button></form>
+<div class="scan-feedback">
+<small id="scanHelp" class="scan-help"><span><kbd>Enter</kbd> добавить</span><span><kbd>F2</kbd> вернуть фокус</span></small>
+<div id="scanNotice" class="scan-error" role="status"></div>
+</div>
+</div>
+<div class="scan-results">
+<h3 class="scan-results-title">Сканы партии</h3>
+<ul id="scans" class="items scan-list"></ul>
+<div class="row scan-tools"><button class="quiet" id="jumpToLastScan" data-scan-jump aria-controls="scans">К последнему <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><button class="quiet" id="undo">Убрать последний</button><button class="quiet danger" id="clearScans">Очистить сканы</button></div>
+</div>
+</section>
+<div class="row actions batch-footer"><button id="closeBatch" class="primary">Следующая партия</button><button id="cancelBatchEdit" class="quiet" hidden>Отменить правку</button><span class="badge" id="batchCount"></span></div>
+</div>
+</section>
+<div id="scanToastSlot"></div>
+</div>
+<aside>
+<section class="card supplier-card" aria-label="Партии">
+<div id="startRight" hidden></div>
+<div id="workRight" class="supplier-work-layout">
+<div class="spread"><h2>Партии</h2><div class="batch-summary" id="batchSummary"><span class="badge" id="total"></span><div class="batch-selection-tools" id="batchSelectionTools" inert><small id="selectedBatchCount" role="status"></small></div></div></div>
+<div id="suppliers" class="stack"></div>
+<div class="row actions"><button id="saveAddition" class="quiet">Сохранить</button><button id="openSummary" class="quiet summary-heart" aria-label="Выжимка" title="Выжимка"><span aria-hidden="true">♥︎</span></button><button id="finish" class="primary">Скачать XLSX</button></div>
+</div>
+</section>
+<div id="supplierToastSlot"></div>
+</aside>
+</section>
+<section id="history" hidden>
+<div id="historyList" class="history-list"></div>
+<div id="historyToastSlot"></div>
+</section>
+<div id="storageError" class="notice error" role="alert" hidden></div>
+</main>
+<div id="notice" class="action-toast" role="status" hidden></div>
+<dialog id="detail" aria-labelledby="detailTitle">
+<div class="detail-header"><h2 id="detailTitle"></h2><button id="closeDetail" class="quiet">Закрыть</button></div>
+<p id="detailContext" class="muted" hidden></p>
+<div id="detailMetadata" class="detail-metadata" hidden><time id="detailSavedAt"></time><div class="detail-metrics"><span class="badge">Трубок <strong id="detailPhoneCount"></strong></span><span class="badge">Поставщиков <strong id="detailSupplierCount"></strong></span></div></div>
+<div id="detailBody"></div>
+<div class="row actions"><button id="deleteDetailEntry" class="quiet danger" type="button"></button><button id="editHistoryEntry" class="quiet">Редактировать</button><button id="historySummary" class="quiet summary-heart" aria-label="Выжимка" title="Выжимка"><span aria-hidden="true">♥︎</span></button><button id="downloadHistoryEntry" class="primary">Скачать XLSX</button></div>
+</dialog>
+<dialog id="summaryDialog" aria-label="Выжимка">
+<div class="spread"><span id="summaryTitle" class="summary-heart" aria-hidden="true">♥︎</span><form method="dialog"><button class="quiet" autofocus>Закрыть</button></form></div>
+<p id="summaryHint" class="muted" hidden></p>
+<textarea id="summaryText" class="summary-preview" aria-label="Текст выжимки" readonly rows="2"></textarea>
+<div class="row actions summary-footer"><small id="summaryStatus" role="status"></small><button id="copySummary" class="primary">Скопировать</button></div>
+</dialog>
+<dialog id="searchDialog" aria-labelledby="searchTitle">
+<div class="spread"><h2 id="searchTitle">Поиск</h2><button id="closeSearch" class="quiet">Закрыть</button></div>
+<div class="search-entry"><input id="searchQuery" aria-label="Поиск по добавкам" placeholder="IMEI, модель, поставщик или имя добавки" autocomplete="off" autofocus><button id="clearSearchQuery" type="button" class="clear-model" aria-label="Очистить поиск" title="Очистить поиск" hidden></button></div>
+<p id="searchSummary" class="muted" role="status"></p>
+<div id="searchResults"></div>
+</dialog>
+<dialog id="appConfirm" aria-labelledby="appConfirmTitle" aria-describedby="appConfirmMessage">
+<form method="dialog">
+<h2 id="appConfirmTitle"></h2>
+<p id="appConfirmMessage"></p>
+<div class="row"><button class="quiet" id="appConfirmCancel" value="cancel" autofocus>Отмена</button><button class="primary" id="appConfirmAccept" value="accept"></button></div>
+</form>
+</dialog>
+<script>
+const catalog = [
+  {
+    "name": "iPhone X",
+    "memory": [
+      "64",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      }
+    ]
+  },
+  {
+    "name": "iPhone XS",
+    "memory": [
+      "64",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone XS Max",
+    "memory": [
+      "64",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone XR",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      },
+      {
+        "emoji": "🧡",
+        "label": "коралловый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 11",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 11 Pro",
+    "memory": [
+      "64",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 11 Pro Max",
+    "memory": [
+      "64",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 12 mini",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 12",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 12 Pro",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 12 Pro Max",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 13 mini",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 13",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 13 Pro",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 13 Pro Max",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 14",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 14 Plus",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 14 Pro",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 14 Pro Max",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 15",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 15 Plus",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💛",
+        "label": "жёлтый"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 15 Pro",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "🩶",
+        "label": "титан"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 15 Pro Max",
+    "memory": [
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "🩶",
+        "label": "титан"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 16",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 16 Plus",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "🩷",
+        "label": "розовый"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 16 Pro",
+    "memory": [
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "🩶",
+        "label": "титан"
+      },
+      {
+        "emoji": "💛",
+        "label": "пустынный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 16 Pro Max",
+    "memory": [
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "🩶",
+        "label": "титан"
+      },
+      {
+        "emoji": "💛",
+        "label": "пустынный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 17",
+    "memory": [
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      },
+      {
+        "emoji": "💚",
+        "label": "зелёный"
+      },
+      {
+        "emoji": "💜",
+        "label": "фиолетовый"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 17 Pro",
+    "memory": [
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🩶",
+        "label": "белый"
+      },
+      {
+        "emoji": "🧡",
+        "label": "оранжевый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 17 Pro Max",
+    "memory": [
+      "256",
+      "512",
+      "1024",
+      "2048"
+    ],
+    "colors": [
+      {
+        "emoji": "🩶",
+        "label": "белый"
+      },
+      {
+        "emoji": "🧡",
+        "label": "оранжевый"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      }
+    ]
+  },
+  {
+    "name": "iPhone Air",
+    "memory": [
+      "256",
+      "512",
+      "1024"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "💛",
+        "label": "золотой"
+      },
+      {
+        "emoji": "💙",
+        "label": "синий"
+      }
+    ]
+  },
+  {
+    "name": "iPhone SE (2-го поколения)",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone SE (3-го поколения)",
+    "memory": [
+      "64",
+      "128",
+      "256"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      },
+      {
+        "emoji": "❤️",
+        "label": "красный"
+      }
+    ]
+  },
+  {
+    "name": "iPhone 16e",
+    "memory": [
+      "128",
+      "256",
+      "512"
+    ],
+    "colors": [
+      {
+        "emoji": "🖤",
+        "label": "чёрный"
+      },
+      {
+        "emoji": "🤍",
+        "label": "белый"
+      }
+    ]
+  }
+];
+
+"use strict";
+
+function createXlsx(suppliers) {
+  const main = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+  const office = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+  const packageRel = "http://schemas.openxmlformats.org/package/2006/relationships";
+  const declaration = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const escapeXml = text => text.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\ufffe\uffff]/g, "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const stringCell = (address, value, quote = false) =>
+    `<c r="${address}" t="inlineStr"${quote ? ' s="1"' : ''}><is><t xml:space="preserve">${escapeXml(value)}</t></is></c>`;
+  const columns = ["Название", "Категория", "Артикул", "Количество"];
+  const rows = [`<row r="1">${columns.map((text, index) => stringCell("ABCD"[index] + "1", text)).join("")}</row>`];
+  let row = 2;
+  let hasSupplier = false;
+  for (const supplier of suppliers) {
+    if (!supplier.batches.some(batch => batch.imeis.length)) continue;
+    if (hasSupplier) row++;
+    hasSupplier = true;
+    for (const batch of supplier.batches) {
+      const name = batchName(batch);
+      for (const imei of batch.imeis) {
+        rows.push(`<row r="${row}">${stringCell("A" + row, name)}${stringCell("B" + row, batch.model)}${stringCell("C" + row, imei, true)}<c r="D${row}"><v>1</v></c></row>`);
+        row++;
+      }
+    }
+  }
+  const files = {
+    "[Content_Types].xml": `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>`,
+    "_rels/.rels": `<Relationships xmlns="${packageRel}"><Relationship Id="rId1" Type="${office}/officeDocument" Target="xl/workbook.xml"/></Relationships>`,
+    "xl/workbook.xml": `<workbook xmlns="${main}" xmlns:r="${office}"><sheets><sheet name="Лист1" sheetId="1" r:id="rId1"/></sheets></workbook>`,
+    "xl/_rels/workbook.xml.rels": `<Relationships xmlns="${packageRel}"><Relationship Id="rId1" Type="${office}/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="${office}/styles" Target="styles.xml"/></Relationships>`,
+    "xl/styles.xml": `<styleSheet xmlns="${main}"><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" quotePrefix="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`,
+    "xl/worksheets/sheet1.xml": `<worksheet xmlns="${main}"><cols><col min="1" max="1" width="42" customWidth="1"/><col min="2" max="3" width="23" customWidth="1"/><col min="4" max="4" width="15" customWidth="1"/></cols><sheetData>${rows.join("")}</sheetData></worksheet>`
+  };
+  return zipWorkbook(Object.entries(files).map(([path, xml]) => [path, declaration + xml]));
+}
+
+// XLSX is a ZIP container. Store entries without compression to keep export dependency-free.
+function zipWorkbook(entries) {
+  const encoder = new TextEncoder();
+  const crcTable = Uint32Array.from({ length: 256 }, (_, byte) => {
+    for (let bit = 0; bit < 8; bit++) byte = (byte >>> 1) ^ ((byte & 1) ? 0xedb88320 : 0);
+    return byte;
+  });
+  const parts = [];
+  const directory = [];
+  let offset = 0;
+  let directorySize = 0;
+  for (const [path, xml] of entries) {
+    const name = encoder.encode(path);
+    const content = encoder.encode(xml);
+    let crc = 0xffffffff;
+    for (const byte of content) crc = (crc >>> 8) ^ crcTable[(crc ^ byte) & 0xff];
+    crc ^= 0xffffffff;
+
+    const local = new DataView(new ArrayBuffer(30));
+    local.setUint32(0, 0x04034b50, true);
+    local.setUint16(4, 20, true);
+    local.setUint16(12, 33, true);
+    local.setUint32(14, crc, true);
+    local.setUint32(18, content.length, true);
+    local.setUint32(22, content.length, true);
+    local.setUint16(26, name.length, true);
+
+    const central = new DataView(new ArrayBuffer(46));
+    central.setUint32(0, 0x02014b50, true);
+    central.setUint16(4, 20, true);
+    central.setUint16(6, 20, true);
+    central.setUint16(14, 33, true);
+    central.setUint32(16, crc, true);
+    central.setUint32(20, content.length, true);
+    central.setUint32(24, content.length, true);
+    central.setUint16(28, name.length, true);
+    central.setUint32(42, offset, true);
+
+    parts.push(local.buffer, name, content);
+    directory.push(central.buffer, name);
+    offset += local.byteLength + name.length + content.length;
+    directorySize += central.byteLength + name.length;
+  }
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true);
+  end.setUint16(8, entries.length, true);
+  end.setUint16(10, entries.length, true);
+  end.setUint32(12, directorySize, true);
+  end.setUint32(16, offset, true);
+  return new Blob([...parts, ...directory, end.buffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  });
+}
+
+"use strict";
+const $ = id => document.getElementById(id);
+const storageKey = "dobavka-v1";
+const imeiPattern = /^\d{15}$/;
+const timestamp = () => new Date().toISOString();
+const dateLabel = date => new Date(date).toLocaleDateString("ru-RU");
+const newSupplier = number => ({ name: `Поставщик ${number}`, customName: false, batches: [] });
+function renumberSuppliers(suppliers) {
+  suppliers.forEach((group, index) => {
+    // Older drafts did not distinguish custom names from numbered defaults.
+    group.customName ??= !/^Поставщик [1-9]\d*$/.test(group.name);
+    if (!group.customName) group.name = `Поставщик ${index + 1}`;
+  });
+}
+const newBatch = () => ({ model: "", memory: "", color: "", imeis: [] });
+const newDraft = () => ({
+  name: `Добавка от ${dateLabel(timestamp())}`, suppliers: [newSupplier(1)],
+  active: 0, batch: newBatch(), editIndex: null
+});
+const blankState = () => ({ version: 1, draft: newDraft(), history: [] });
+const customMemory = [...new Set(catalog.flatMap(spec => spec.memory))].sort((a, b) => Number(a) - Number(b));
+const customColors = [...new Map(catalog.flatMap(spec => spec.colors).map(color => [color.label, color])).values()];
+function modelSpec(name) {
+  if (!name) return undefined;
+  return catalog.find(spec => spec.name === name) ?? { name, memory: customMemory, colors: customColors };
+}
+const modelPosition = new Map(catalog.map((item, index) => [item.name, index]));
+modelPosition.set("iPhone SE (2-го поколения)", modelPosition.get("iPhone 12 mini") - 0.5);
+modelPosition.set("iPhone SE (3-го поколения)", modelPosition.get("iPhone 14") - 0.5);
+modelPosition.set("iPhone 16e", modelPosition.get("iPhone 16") - 0.5);
+modelPosition.set("iPhone Air", modelPosition.get("iPhone 17") + 0.5);
+const unknownModelOrder = new Intl.Collator("ru", { numeric: true, sensitivity: "base" });
+function compareBatchModels(left, right) {
+  const a = modelPosition.get(left.model) ?? catalog.length;
+  const b = modelPosition.get(right.model) ?? catalog.length;
+  return a - b || (a === catalog.length ? unknownModelOrder.compare(left.model, right.model) : 0);
+}
+function sortSupplierBatches(suppliers, editingIndex = -1) {
+  suppliers.forEach((group, index) => {
+    if (index !== editingIndex) group.batches.sort(compareBatchModels);
+  });
+}
+const validText = value => typeof value === "string" && value.length <= 120;
+const validIndex = value => Number.isSafeInteger(value) && value >= 0;
+const validBatch = (batch, active = false) => batch && [batch.model, batch.memory, batch.color].every(validText)
+  && (batch.importedName == null || (validText(batch.importedName) && Boolean(batch.importedName && batch.model)))
+  && Array.isArray(batch.imeis) && batch.imeis.every(imei => typeof imei === "string" && imeiPattern.test(imei))
+  && (active
+    ? (!batch.memory || /^\d+$/.test(batch.memory))
+    : (!batch.imeis.length || batch.importedName || (batch.model && /^\d+$/.test(batch.memory) && batch.color)));
+const validSuppliers = suppliers => Array.isArray(suppliers) && suppliers.every(supplier =>
+  supplier && validText(supplier.name) && Array.isArray(supplier.batches) && supplier.batches.every(batch => validBatch(batch)));
+function validDraft(item) {
+  return item && validText(item.name) && validSuppliers(item.suppliers)
+    && validIndex(item.active) && Boolean(item.suppliers[item.active]) && validBatch(item.batch, true)
+    && (item.batchEdit == null || (validBatch(item.batchEdit.original) && validIndex(item.editIndex)
+      && validIndex(item.batchEdit.previousSupplier) && Boolean(item.suppliers[item.batchEdit.previousSupplier])
+      && validBatch(item.batchEdit.previousBatch)))
+    && (item.configBuffer == null || (validText(item.configBuffer.model) && item.configBuffer.model
+      && validText(item.configBuffer.memory) && /^\d+$/.test(item.configBuffer.memory)
+      && validText(item.configBuffer.color) && item.configBuffer.color))
+    && (item.editIndex === null || validIndex(item.editIndex));
+}
+function validate(data) {
+  if (data?.version !== 1 || !validDraft(data.draft)
+      || !Array.isArray(data.history) || !data.history.every(entry => entry && validText(entry.name)
+        && Number.isFinite(Date.parse(entry.date)) && validSuppliers(entry.suppliers))) {
+    throw new Error("Файл не похож на резервную копию приложения «Добавка».");
+  }
+  renumberSuppliers(data.draft.suppliers);
+  sortSupplierBatches(data.draft.suppliers, data.draft.editIndex === null ? -1 : data.draft.active);
+  return data;
+}
+let state = blankState();
+let storageLocked = false;
+try {
+  const saved = localStorage.getItem(storageKey);
+  if (saved) state = validate(JSON.parse(saved));
+} catch {
+  storageLocked = true;
+  showStorageError("Не удалось открыть локальную историю. Восстанови резервную копию или открой приложение в браузере, где разрешено хранение данных.");
+}
+function showStorageError(message) {
+  $("storageError").hidden = !message;
+  $("storageError").textContent = message;
+}
+function save(data = state) {
+  if (storageLocked) return false;
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(data));
+    showStorageError("");
+    return true;
+  } catch {
+    showStorageError("Браузер не сохранил изменения. Пока вкладка открыта, сделай резервную копию через «История».");
+    return false;
+  }
+}
+function el(tag, value, className) {
+  const node = document.createElement(tag);
+  if (value !== undefined) node.textContent = value;
+  if (className) node.className = className;
+  return node;
+}
+function button(label, run, className = "") {
+  const node = el("button", label, className);
+  node.type = "button";
+  node.addEventListener("click", run);
+  return node;
+}
+const draft = () => state.draft;
+const batch = () => draft().batch;
+const supplier = () => draft().suppliers[draft().active];
+const supplierCount = group => group.batches.reduce((sum, item) => sum + item.imeis.length, 0);
+const totalCount = groups => groups.reduce((sum, group) => sum + supplierCount(group), 0);
+const errorSuffix = " (ошибка)";
+const withErrorSuffix = (item, name) => item.hasError ? name + errorSuffix : name;
+const batchName = item => withErrorSuffix(item, item.importedName ?? `${item.model} ${item.memory} Gb ${item.color}`);
+const focusScan = () => $("scan").focus({ preventScroll: true });
+let toastTimer;
+function actionRect(element) {
+  if (element === document.body) return null;
+  const rect = element?.getBoundingClientRect?.();
+  return rect?.width && rect.height ? rect : null;
+}
+function notify(message = "", error = false, anchor = actionRect(document.activeElement)) {
+  const toast = $("notice");
+  clearTimeout(toastTimer);
+  toast.getAnimations().forEach(animation => animation.cancel());
+  toast.hidden = !message;
+  toast.textContent = message;
+  if (!message) return;
+  toast.classList.toggle("error", error);
+  const supplierCard = $("workRight").closest(".card");
+  const supplierRect = actionRect(supplierCard);
+  const supplierAction = supplierRect && anchor && anchor.left >= supplierRect.left - 2;
+  const gutterWidth = supplierRect ? document.documentElement.clientWidth - supplierRect.right - 24 : 0;
+  const inGutter = supplierAction && gutterWidth >= 200;
+  toast.classList.toggle("in-gutter", Boolean(inGutter));
+  if (inGutter) {
+    document.body.append(toast);
+    toast.style.setProperty("--gutter-width", `${gutterWidth}px`);
+    toast.style.left = `${supplierRect.right + 12}px`;
+    toast.style.top = `${Math.max(10, Math.min(anchor.top, innerHeight - toast.offsetHeight - 10))}px`;
+  } else {
+    const slot = !$("history").hidden ? $("historyToastSlot")
+      : supplierAction ? $("supplierToastSlot") : $("scanToastSlot");
+    slot.append(toast);
+  }
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const offset = inGutter ? "translateX(-9px)" : "translateY(-7px)";
+    toast.animate([
+      { transform: offset, opacity: 0 },
+      { transform: "none", opacity: 1 }
+    ], { duration: 240, easing: "cubic-bezier(.22,.72,.25,1)" });
+  }
+  toastTimer = setTimeout(() => {
+    if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      notify();
+      return;
+    }
+    const exit = toast.animate([
+      { transform: "none", opacity: 1 },
+      { transform: inGutter ? "translateX(8px)" : "translateY(6px)", opacity: 0 }
+    ], { duration: 210, easing: "ease-in", fill: "forwards" });
+    exit.onfinish = () => notify();
+  }, error ? 3400 : 1900);
+}
+function scanFeedback(message = "") {
+  $("scanNotice").textContent = message;
+  if (message) notify();
+}
+function filled() { return Boolean(batch().importedName || (batch().model && batch().memory && batch().color)); }
+const foldColor = value => value.toLowerCase().replace(/ё/g, "е");
+function colorSearchNames(model, label) {
+  const names = [foldColor(label)];
+  if (label === "пустынный" && model.startsWith("iPhone 16 Pro")) names.push("десерт");
+  if (label === "золотой" && /^iPhone (11|12|13|14) Pro/.test(model)) names.push("желтый");
+  return names;
+}
+function canonicalColor(model, label) {
+  const spec = modelSpec(model);
+  return spec?.colors.find(color => colorSearchNames(model, color.label).includes(foldColor(label)))?.label ?? label;
+}
+function renderSetup() {
+  const current = batch();
+  const spec = modelSpec(current.model);
+  if ($("modelOptions").hidden) $("model").value = modelDisplay(current);
+  $("markError").disabled = !current.model;
+  $("clearParty").disabled = !current.model && !current.imeis.length;
+  $("markError").setAttribute("aria-pressed", String(Boolean(current.hasError)));
+  for (const [target, key, options] of [
+    ["memories", "memory", (spec?.memory ?? []).map(size => ({ value: size, text: `${size} ГБ` }))],
+    ["colors", "color", (spec?.colors ?? []).map(color => ({ value: color.label, text: `${color.emoji} ${color.label}` }))]
+  ]) {
+    function updateChip(chip, option) {
+      const selected = key === "color" ? canonicalColor(current.model, current.color) === option.value
+        : current[key] === option.value;
+      chip.classList.toggle("selected", selected);
+      chip.classList.toggle("quiet", !selected);
+      chip.setAttribute("aria-pressed", String(selected));
+    }
+    const nodes = options.map(option => {
+      const chip = button(option.text, () => {
+        delete current.importedName;
+        const previous = key === "color" ? canonicalColor(current.model, current.color) : current[key];
+        current[key] = previous === option.value ? "" : option.value;
+        save();
+        nodes.forEach((node, index) => updateChip(node, options[index]));
+        const input = $("model");
+        input.value = modelDisplay(current);
+        animateUpdate(input);
+        renderSuppliers();
+        notify();
+        if (filled()) focusScan();
+      });
+      updateChip(chip, option);
+      return chip;
+    });
+    $(target).replaceChildren(...(nodes.length ? nodes : [el("small", "Выбери модель")]));
+  }
+}
+function renderScanRow(line, index) {
+  const imei = batch().imeis[index];
+  const remove = button("", () => removeScan(index), "quiet remove-scan");
+  remove.title = "Убрать IMEI";
+  remove.setAttribute("aria-label", `Убрать IMEI ${imei}`);
+  const edit = button(imei, () => openImeiEditor(line, index), "mono scan-code");
+  edit.title = "Редактировать IMEI";
+  line.replaceChildren(edit, remove);
+}
+function renderScans() {
+  document.querySelector(".imei-flight")?.remove();
+  const current = batch();
+  const rows = current.imeis.map((_, index) => {
+    const line = el("li", undefined, "spread scan-item");
+    renderScanRow(line, index);
+    return line;
+  });
+  const scans = $("scans");
+  const previousScroll = scans.scrollTop;
+  scans.replaceChildren(...(rows.length ? rows : [el("li", "Здесь появятся принятые IMEI.", "muted scan-empty")]));
+  scans.scrollTop = previousScroll;
+  $("batchCount").textContent = `Трубок: ${current.imeis.length}`;
+  $("jumpToLastScan").disabled = $("undo").disabled = $("clearScans").disabled = !current.imeis.length;
+  const editing = draft().editIndex !== null;
+  $("batchHeading").textContent = editing ? "Правка партии" : "Текущая партия";
+  $("clearParty").disabled = !current.model && !current.imeis.length;
+  $("closeBatch").textContent = editing ? "Сохранить правку" : "Следующая партия";
+  $("closeBatch").disabled = !current.imeis.length;
+  $("cancelBatchEdit").hidden = !draft().batchEdit;
+  const buffer = draft().configBuffer;
+  const bufferSlot = $("configBufferSlot");
+  bufferSlot.classList.toggle("has-buffer", Boolean(buffer));
+  bufferSlot.inert = !buffer;
+  $("configBuffer").disabled = !buffer || editing || Boolean(current.imeis.length);
+  if (buffer) $("configBuffer").textContent = `Из буфера · ${modelDisplay(buffer)}`;
+}
+function askAction(title, message, action, { cancel = "Отмена", danger = false } = {}) {
+  const dialog = $("appConfirm");
+  if (dialog.open) return Promise.resolve(false);
+  $("appConfirmTitle").textContent = title;
+  $("appConfirmMessage").textContent = message;
+  $("appConfirmCancel").textContent = cancel;
+  const accept = $("appConfirmAccept");
+  accept.textContent = action;
+  accept.className = danger ? "confirm-danger" : "primary";
+  dialog.returnValue = "cancel";
+  return new Promise(resolve => {
+    dialog.addEventListener("close", () => resolve(dialog.returnValue === "accept"), { once: true });
+    showAnimatedDialog(dialog);
+  });
+}
+async function insertSupplier(groupIndex, after) {
+  const pending = batch();
+  const saved = await closeBatch();
+  if (!saved) return;
+  const current = draft();
+  const group = current.suppliers[groupIndex];
+  const next = newSupplier(groupIndex + 2);
+  const before = snapshotSupplierLayout();
+  if (after !== null) {
+    const index = group.batches.indexOf(after === pending ? saved : after);
+    if (index < 0 || index === group.batches.length - 1) {
+      refresh("После этой партии нет строк для разделения.");
+      return;
+    }
+    next.batches = group.batches.splice(index + 1);
+  }
+  current.suppliers.splice(groupIndex + 1, 0, next);
+  renumberSuppliers(current.suppliers);
+  current.active = groupIndex + 1;
+  refresh("Открыт новый поставщик.");
+  animateSupplierChange(before, { added: next });
+}
+function matchingBatch(items, batch) {
+  return items.find(item => {
+    if (item.model !== batch.model) return false;
+    if (item.importedName || batch.importedName) return batchName(item) === batchName(batch);
+    return item.memory === batch.memory && Boolean(item.hasError) === Boolean(batch.hasError)
+      && canonicalColor(item.model, item.color) === canonicalColor(batch.model, batch.color);
+  });
+}
+function addOrMergeBatch(items, batch, index = items.length) {
+  const match = matchingBatch(items, batch);
+  if (match) match.imeis.push(...batch.imeis);
+  else items.splice(index, 0, batch);
+  return match ?? batch;
+}
+function confirmBatchTransfer(destination, existing, incoming) {
+  const seen = existing.slice();
+  const conflicts = new Set();
+  for (const item of incoming) {
+    if (matchingBatch(seen, item)) conflicts.add(batchName(item));
+    else seen.push(item);
+  }
+  if (!conflicts.size) return true;
+  return askAction("Объединить партии?", `У поставщика «${destination.name}» совпадают конфигурации:\n${Array.from(conflicts).join("\n")}`, "Объединить");
+}
+async function undoSupplier(index) {
+  const current = draft();
+  if (current.editIndex !== null) {
+    notify("Сначала сохрани или отмени правку партии.", true);
+    return;
+  }
+  const previous = current.suppliers[index - 1];
+  const removed = current.suppliers[index];
+  const activeBeforeBoundary = current.active === index - 1 && removed.batches.length && batch().imeis.length;
+  const existing = activeBeforeBoundary ? [...previous.batches, batch()] : previous.batches;
+  if (!await confirmBatchTransfer(previous, existing, removed.batches)) return;
+  if (activeBeforeBoundary && !await closeBatch()) return;
+  const before = snapshotSupplierLayout();
+  const merged = new Map();
+  for (const item of removed.batches) {
+    const match = matchingBatch(previous.batches, item);
+    if (match) merged.set(item, match);
+    addOrMergeBatch(previous.batches, item);
+  }
+  previous.batches.sort(compareBatchModels);
+  current.suppliers.splice(index, 1);
+  renumberSuppliers(current.suppliers);
+  if (current.active >= index) current.active--;
+  refresh("Поставщик удалён.");
+  animateSupplierChange(before, { removed, merged });
+}
+const selectedBatches = new Set();
+let draggedBatches = [];
+const renderedBatchRows = new Map();
+const renderedSupplierHeaders = new Map();
+function finishBatchDrag() {
+  draggedBatches = [];
+  $("suppliers").querySelectorAll(".drop-target").forEach(node => node.classList.remove("drop-target"));
+}
+function bounceBatches(items) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+  for (const item of items) {
+    const row = renderedBatchRows.get(item);
+    if (!row?.isConnected) continue;
+    row.getAnimations().find(animation => animation.id === "batch-return")?.cancel();
+    const bounce = row.animate([
+      { transform: "translateX(5px)" },
+      { transform: "translateX(-2px)", offset: 0.58 },
+      { transform: "none" }
+    ], { duration: 260, easing: "ease-out" });
+    bounce.id = "batch-return";
+  }
+}
+async function moveBatches(destination) {
+  const groups = draft().suppliers;
+  if (draft().editIndex !== null || !groups.includes(destination)) return;
+  const sources = groups.filter(group => group !== destination);
+  const incoming = sources.flatMap(group => group.batches.filter(item => draggedBatches.includes(item)));
+  finishBatchDrag();
+  if (!incoming.length) return;
+  if (!await confirmBatchTransfer(destination, destination.batches, incoming)) {
+    bounceBatches(incoming);
+    return;
+  }
+  const animate = matchMedia("(prefers-reduced-motion: no-preference)").matches;
+  const oldRows = animate ? new Map(Array.from(renderedBatchRows, ([item, row]) =>
+    [item, { row, rect: row.getBoundingClientRect() }])) : new Map();
+  const mergedRows = new Map();
+  for (const group of sources) {
+    group.batches = group.batches.filter(item => !incoming.includes(item));
+  }
+  for (const item of incoming) {
+    const match = matchingBatch(destination.batches, item);
+    if (match) mergedRows.set(item, match);
+    addOrMergeBatch(destination.batches, item);
+  }
+  destination.batches.sort(compareBatchModels);
+  selectedBatches.clear();
+  refresh(`Перенесено партий: ${incoming.length} → ${destination.name}`,
+    () => actionRect(renderedSupplierHeaders.get(destination)));
+  if (animate) animateBatchMove(oldRows, mergedRows);
+}
+function supplierEmptyRow(header) {
+  const sibling = header?.nextElementSibling;
+  return sibling?.matches(".supplier-empty") ? sibling : null;
+}
+function snapshotSupplierLayout() {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return null;
+  const measure = (nodes, getRow = row => row) => new Map(Array.from(nodes).flatMap(([item, node]) => {
+    const row = getRow(node);
+    return row ? [[item, { row, rect: row.getBoundingClientRect() }]] : [];
+  }));
+  const list = $("suppliers");
+  return {
+    headers: measure(renderedSupplierHeaders),
+    emptyRows: measure(renderedSupplierHeaders, supplierEmptyRow),
+    batches: measure(renderedBatchRows),
+    footer: actionRect(list.querySelector(".divider-footer")),
+    viewport: list.getBoundingClientRect()
+  };
+}
+function animateSupplierChange(before, { added, removed, merged = new Map() }) {
+  if (!before) return;
+  const timing = { duration: 420, easing: "cubic-bezier(.22,.68,.28,1)" };
+  const shift = (row, old) => {
+    if (!row || !old) return;
+    const y = old.top - row.getBoundingClientRect().top;
+    if (Math.abs(y) >= 1) row.animate([{ transform: `translateY(${y}px)` }, { transform: "none" }], timing);
+  };
+  function reveal(row, delay) {
+    if (!row) return;
+    const motion = row.animate([
+      { opacity: 0, transform: "translateY(-7px)" },
+      { opacity: 1, transform: "none" }
+    ], { ...timing, duration: 345, delay, fill: "backwards" });
+    motion.id = "supplier-enter";
+  }
+  for (const [group, row] of renderedSupplierHeaders) {
+    const empty = supplierEmptyRow(row);
+    if (group === added) {
+      reveal(row, 15);
+      reveal(empty, 85);
+    } else {
+      shift(row, before.headers.get(group)?.rect);
+      const oldEmpty = before.emptyRows.get(group)?.rect;
+      if (empty && !oldEmpty) reveal(empty, 85);
+      else shift(empty, oldEmpty);
+    }
+  }
+  shift($("suppliers").querySelector(".divider-footer"), before.footer);
+  for (const gone of [before.headers.get(removed), before.emptyRows.get(removed)]) {
+    if (!gone || gone.rect.top < before.viewport.top || gone.rect.bottom > before.viewport.bottom) continue;
+    const ghost = gone.row.cloneNode(true);
+    ghost.classList.add("batch-travel");
+    ghost.inert = true;
+    ghost.setAttribute("aria-hidden", "true");
+    ghost.style.cssText = `left:${gone.rect.left}px;top:${gone.rect.top}px;width:${gone.rect.width}px;height:${gone.rect.height}px;margin:0`;
+    document.body.append(ghost);
+    ghost.animate([
+      { opacity: 1, transform: "none" },
+      { opacity: 0, transform: "translateY(-8px) scale(.98)" }
+    ], { duration: 250, easing: "cubic-bezier(.4,0,.3,1)" }).finished.then(() => ghost.remove(), () => ghost.remove());
+  }
+  animateBatchMove(before.batches, merged, timing);
+}
+function animateBatchMove(oldRows, mergedRows, motion = { duration: 300, easing: "cubic-bezier(.22,.72,.25,1)" }) {
+  const finalRects = new Map(Array.from(renderedBatchRows, ([item, row]) => [item, row.getBoundingClientRect()]));
+  for (const [item, row] of renderedBatchRows) {
+    const old = oldRows.get(item)?.rect;
+    if (!old) continue;
+    const next = finalRects.get(item);
+    const x = old.left - next.left;
+    const y = old.top - next.top;
+    if (Math.abs(x) + Math.abs(y) < 1) continue;
+    row.animate([{ transform: `translate(${x}px, ${y}px)` }, { transform: "none" }], motion);
+  }
+  for (const [incoming, destination] of mergedRows) {
+    const old = oldRows.get(incoming);
+    const target = renderedBatchRows.get(destination);
+    if (!old || !target) continue;
+    const next = finalRects.get(destination);
+    const ghost = old.row.cloneNode(true);
+    ghost.classList.add("batch-travel");
+    ghost.inert = true;
+    ghost.style.cssText = `left:${old.rect.left}px;top:${old.rect.top}px;width:${old.rect.width}px`;
+    document.body.append(ghost);
+    const x = next.left - old.rect.left;
+    const y = next.top - old.rect.top;
+    const flight = ghost.animate([
+      { transform: "none" },
+      { transform: `translate(${x}px, ${y}px) scale(.96)`, opacity: 0.25 }
+    ], motion);
+    flight.finished.then(() => {
+      if (target.isConnected) target.animate([
+        { boxShadow: "inset 0 0 0 1px var(--blue)" },
+        { boxShadow: "inset 0 0 0 1px transparent" }
+      ], { duration: 480, easing: "ease-out" });
+      ghost.remove();
+    }, () => ghost.remove());
+  }
+}
+let draggingDivider = false;
+let dividerStartY = 0;
+let dividerArmed = false;
+let dividerTarget = null;
+const dividerLiftThreshold = 36;
+const dividerSlots = [];
+function setDividerTarget(target) {
+  if (dividerTarget === target) return;
+  dividerTarget?.node.classList.remove("is-drop-point");
+  dividerTarget = target;
+  dividerTarget?.node.classList.add("is-drop-point");
+}
+function finishDividerDrag() {
+  draggingDivider = false;
+  dividerArmed = false;
+  $("suppliers").classList.remove("divider-dragging", "divider-cancel-target");
+  setDividerTarget(null);
+}
+function dividerSlot(action, atEnd = false) {
+  const node = el("div", undefined, "divider-slot");
+  node.setAttribute("aria-hidden", "true");
+  if (action) dividerSlots.push({ node, action, atEnd });
+  return node;
+}
+const supplierList = $("suppliers");
+function endDividerTarget() {
+  return dividerSlots.find(slot => slot.atEnd) ?? null;
+}
+supplierList.addEventListener("dragover", event => {
+  if (!draggingDivider) return;
+  if (!dividerArmed) {
+    if (dividerStartY - event.clientY < dividerLiftThreshold) return;
+    dividerArmed = true;
+    supplierList.classList.add("divider-dragging");
+  }
+  const atCancelZone = Boolean(event.target.closest(".divider-cancel-panel"));
+  supplierList.classList.toggle("divider-cancel-target", atCancelZone);
+  if (atCancelZone || event.target.closest(".supplier-line")) {
+    setDividerTarget(null);
+    event.dataTransfer.dropEffect = "none";
+    return;
+  }
+  if (event.target.closest(".divider-footer")) {
+    const end = endDividerTarget();
+    setDividerTarget(end);
+    event.dataTransfer.dropEffect = end ? "copy" : "none";
+    if (end) event.preventDefault();
+    return;
+  }
+  if (dividerTarget) {
+    const { top, bottom } = dividerTarget.node.getBoundingClientRect();
+    if (event.clientY >= top - 7 && event.clientY <= bottom + 7) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "copy";
+      return;
+    }
+  }
+  let closest = null;
+  let distance = Infinity;
+  for (const slot of dividerSlots) {
+    const { top, height } = slot.node.getBoundingClientRect();
+    const offset = Math.abs(event.clientY - top - height / 2);
+    if (offset < distance) {
+      closest = slot;
+      distance = offset;
+    }
+  }
+  setDividerTarget(closest);
+  if (!closest) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "copy";
+});
+supplierList.addEventListener("dragleave", event => {
+  if (draggingDivider && !supplierList.contains(event.relatedTarget)) {
+    supplierList.classList.remove("divider-cancel-target");
+    setDividerTarget(null);
+  }
+});
+supplierList.addEventListener("drop", event => {
+  if (!draggingDivider) return;
+  const blocked = !dividerArmed || event.target.closest(".supplier-line, .divider-cancel-panel");
+  const target = blocked ? null : event.target.closest(".divider-footer") ? endDividerTarget() : dividerTarget;
+  finishDividerDrag();
+  if (!target) return;
+  event.preventDefault();
+  target.action();
+});
+function updateBatchSelection() {
+  for (const [item, row] of renderedBatchRows) {
+    const input = row.querySelector(".batch-select");
+    if (!input) continue;
+    input.checked = selectedBatches.has(item);
+    row.classList.toggle("batch-selected", input.checked);
+  }
+  for (const [group, header] of renderedSupplierHeaders) {
+    const input = header.querySelector(".supplier-check");
+    if (!input) continue;
+    const count = group.batches.filter(item => selectedBatches.has(item)).length;
+    input.checked = count > 0 && count === group.batches.length;
+    input.indeterminate = count > 0 && count < group.batches.length;
+    input.setAttribute("aria-label", `Выбрать партии поставщика ${group.name}`);
+  }
+  const active = selectedBatches.size > 0 && draft().editIndex === null;
+  if (active) $("selectedBatchCount").textContent = `Выбрано: ${selectedBatches.size}`;
+  $("batchSummary").classList.toggle("has-selection", active);
+  $("batchSelectionTools").inert = !active;
+  $("total").setAttribute("aria-hidden", String(active));
+}
+async function deleteSelectedBatches() {
+  if (draft().editIndex !== null || !selectedBatches.size) return;
+  const selection = new Set(selectedBatches);
+  const count = Array.from(selection).reduce((sum, item) => sum + item.imeis.length, 0);
+  if (!await askAction("Удалить выбранные партии?",
+    `Партий: ${selection.size} · IMEI: ${count}`, "Удалить выбранные", { danger: true })) return;
+  const before = snapshotSupplierLayout();
+  for (const group of draft().suppliers) group.batches = group.batches.filter(item => !selection.has(item));
+  selectedBatches.clear();
+  refresh("Выбранные партии удалены.");
+  animateSupplierChange(before, {});
+}
+async function deleteSavedBatch(group, item, row) {
+  if (draft().editIndex !== null) {
+    notify("Сначала сохрани или отмени правку партии.", true, actionRect(row));
+    return;
+  }
+  const anchor = actionRect(row);
+  if (!await askAction("Удалить партию?", `${batchName(item)} · IMEI: ${item.imeis.length}`, "Удалить партию", { danger: true })) return;
+  const index = group.batches.indexOf(item);
+  if (index < 0) return;
+  group.batches.splice(index, 1);
+  selectedBatches.delete(item);
+  refresh("Партия удалена.", anchor);
+  return true;
+}
+function renderSuppliers() {
+  renderedBatchRows.clear();
+  renderedSupplierHeaders.clear();
+  const current = draft();
+  finishBatchDrag();
+  finishDividerDrag();
+  dividerSlots.length = 0;
+  const savedBatches = new Set(current.suppliers.flatMap(group => group.batches));
+  for (const item of selectedBatches) {
+    if (!savedBatches.has(item)) selectedBatches.delete(item);
+  }
+  const canMove = current.editIndex === null;
+  const count = totalCount(current.suppliers) + batch().imeis.length;
+  $("total").textContent = `Трубок: ${count}`;
+  $("finish").disabled = $("saveAddition").disabled = !count;
+  $("openSummary").disabled = !count;
+  const lines = [];
+  current.suppliers.forEach((group, index) => {
+    const active = index === current.active;
+    const header = el("div", undefined, active ? "supplier-line active" : "supplier-line");
+    const groupCheck = el("input", undefined, "batch-select supplier-check");
+    groupCheck.type = "checkbox";
+    groupCheck.disabled = !canMove || !group.batches.length;
+    groupCheck.addEventListener("change", () => {
+      for (const item of group.batches) {
+        if (groupCheck.checked) selectedBatches.add(item);
+        else selectedBatches.delete(item);
+      }
+      updateBatchSelection();
+    });
+    const checkHit = el("label", undefined, "batch-check-hit");
+    checkHit.append(groupCheck);
+    header.append(checkHit);
+    if (active) {
+      const rename = button(group.name, () => {
+        const input = el("input", undefined, "supplier-edit");
+        input.value = group.name;
+        input.maxLength = 100;
+        input.setAttribute("aria-label", "Название поставщика");
+        let editingName = true;
+        function finishName(commit) {
+          if (!editingName) return;
+          editingName = false;
+          const name = input.value.trim();
+          if (commit && name && name !== group.name) {
+            group.name = name;
+            group.customName = true;
+            save();
+            rename.textContent = name;
+            updateBatchSelection();
+          }
+          input.replaceWith(rename);
+          animateUpdate(rename);
+        }
+        input.addEventListener("blur", () => finishName(true));
+        input.addEventListener("keydown", event => {
+          if (event.key !== "Enter" && event.key !== "Escape") return;
+          event.preventDefault();
+          finishName(event.key === "Enter");
+          rename.focus();
+        });
+        rename.replaceWith(input);
+        animateUpdate(input);
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }, "supplier-name");
+      rename.title = "Переименовать поставщика";
+      header.append(rename);
+    } else {
+      const activate = button(group.name, async () => {
+        if ((current.editIndex !== null || batch().imeis.length) && !await closeBatch()) return;
+        current.active = index;
+        refresh("Поставщик выбран.");
+      }, "supplier-name");
+      activate.title = "Переключиться на этого поставщика";
+      header.append(activate);
+    }
+    if (index > 0) {
+      const undo = button("↶", () => undoSupplier(index), "undo-supplier");
+      undo.title = "Убрать разделитель и объединить с предыдущим поставщиком";
+      undo.setAttribute("aria-label", `Убрать разделитель: ${group.name}`);
+      header.append(undo);
+    }
+    if (canMove) {
+      header.addEventListener("dragover", event => {
+        if (!draggedBatches.some(item => !group.batches.includes(item))) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        header.classList.add("drop-target");
+      });
+      header.addEventListener("dragleave", event => {
+        if (!header.contains(event.relatedTarget)) header.classList.remove("drop-target");
+      });
+      header.addEventListener("drop", event => {
+        if (!draggedBatches.length) return;
+        event.preventDefault();
+        moveBatches(group);
+      });
+    }
+    renderedSupplierHeaders.set(group, header);
+    lines.push(header);
+
+    const items = group.batches.map((item, batchIndex) => ({ item, batchIndex }));
+    if (active && (batch().imeis.length || current.editIndex !== null)) {
+      items.splice(current.editIndex ?? items.length, 0, { item: batch(), batchIndex: null });
+      if (current.editIndex === null) items.sort((left, right) => compareBatchModels(left.item, right.item));
+    }
+    items.forEach(({ item, batchIndex }, position) => {
+      const editing = batchIndex === null && current.editIndex !== null;
+      const line = el("div", undefined, editing ? "spread batch-line editing" : "spread batch-line");
+      const title = `${batchName(item)} `;
+      const name = batchIndex === null ? el("span", title, "batch-name batch-active")
+        : button(title, () => viewSavedBatch(group, item), "batch-name batch-preview-button");
+      name.append(el("span", `· ${item.imeis.length} шт.`, "batch-quantity"));
+      if (batchIndex !== null || editing) {
+        const selection = el("input", undefined, "batch-select");
+        selection.type = "checkbox";
+        selection.checked = selectedBatches.has(item);
+        selection.disabled = !canMove;
+        selection.setAttribute("aria-label", `Выделить партию ${batchName(item)}`);
+        selection.addEventListener("change", () => {
+          if (selection.checked) selectedBatches.add(item);
+          else selectedBatches.delete(item);
+          updateBatchSelection();
+        });
+        line.classList.toggle("batch-selected", selection.checked);
+        line.draggable = canMove;
+        line.addEventListener("dragstart", event => {
+          if (event.target !== line) return;
+          draggedBatches = selectedBatches.has(item) ? Array.from(selectedBatches) : [item];
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", `Партий: ${draggedBatches.length}`);
+        });
+        line.addEventListener("dragend", () => {
+          const pending = draggedBatches;
+          finishBatchDrag();
+          bounceBatches(pending);
+        });
+        const label = el("div", undefined, "batch-selection");
+        const hit = el("label", undefined, "batch-check-hit");
+        hit.append(selection);
+        label.append(hit, name);
+        line.append(label);
+      } else {
+        const label = el("div", undefined, "batch-selection");
+        const hit = el("label", undefined, "batch-check-hit");
+        const selection = el("input", undefined, "batch-select");
+        selection.type = "checkbox";
+        selection.disabled = true;
+        selection.setAttribute("aria-label", "Текущую партию можно выделить после сохранения");
+        hit.append(selection);
+        label.append(hit, name);
+        line.append(label);
+      }
+      if (editing) line.append(el("small", "Правка"));
+      if (batchIndex !== null) {
+        const actions = el("div", undefined, "batch-actions");
+        actions.append(iconAction("Править", "edit", () => editSavedBatch(group, item)),
+          iconAction("Удалить партию", "remove", () => deleteSavedBatch(group, item, line), "danger"));
+        line.append(actions);
+        renderedBatchRows.set(item, line);
+      }
+      lines.push(line);
+      if (position < items.length - 1) {
+        lines.push(dividerSlot(canMove ? () => insertSupplier(index, item) : null));
+      }
+    });
+    if (!items.length) lines.push(el("small", "Пока без трубок", "supplier-empty"));
+  });
+  const last = current.suppliers.length - 1;
+  const emptyTail = !supplierCount(current.suppliers[last]) && !(current.active === last && batch().imeis.length);
+  const addAtEnd = async () => {
+    if (emptyTail) {
+      if (current.active === last || !await closeBatch()) return;
+      current.active = last;
+      refresh("Открыт пустой поставщик.");
+      return;
+    }
+    insertSupplier(last, null);
+  };
+  if (canMove && !emptyTail) lines.push(dividerSlot(addAtEnd, true));
+  const handle = button("+ Поставщик", addAtEnd, "quiet divider-handle");
+  handle.title = "Перетащи для вставки между партиями или нажми, чтобы добавить в конец";
+  handle.draggable = canMove && dividerSlots.length > 0;
+  handle.disabled = !handle.draggable && (!canMove || (emptyTail && current.active === last));
+  if (!handle.draggable) handle.title = emptyTail ? "В конце уже есть пустой поставщик" : "Добавить поставщика в конец";
+  else if (emptyTail && current.active === last) handle.title = "Перетащи для вставки между партиями";
+  handle.addEventListener("dragstart", event => {
+    draggingDivider = true;
+    dividerStartY = event.clientY;
+    event.dataTransfer.effectAllowed = "copy";
+    event.dataTransfer.setData("text/plain", "Новый поставщик");
+  });
+  handle.addEventListener("dragend", () => {
+    const shortDrag = draggingDivider && !dividerArmed;
+    finishDividerDrag();
+    if (shortDrag && matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      handle.animate([
+        { transform: "translateY(2px)" },
+        { transform: "translateY(-2px)" },
+        { transform: "none" }
+      ], { duration: 190, easing: "ease-out" });
+    }
+  });
+  const footer = el("div", undefined, "divider-footer");
+  const cancelPanel = el("div", undefined, "divider-cancel-panel");
+  const cancelClip = el("div", undefined, "divider-cancel-clip");
+  cancelClip.append(el("div", "Отпустить для отмены", "divider-cancel-zone"));
+  cancelPanel.append(cancelClip);
+  footer.append(handle, cancelPanel);
+  lines.push(footer);
+  $("suppliers").replaceChildren(...lines);
+  updateBatchSelection();
+}
+function render() {
+  $("draftTitle").textContent = draft().name;
+  if (!$("workTitle").hidden) document.title = draft().name;
+  renderSetup();
+  renderScans();
+  renderSuppliers();
+}
+function editSavedBatch(group, item) {
+  const current = draft();
+  const supplierIndex = current.suppliers.indexOf(group);
+  const batchIndex = group.batches.indexOf(item);
+  if (supplierIndex < 0 || batchIndex < 0) return;
+  if (current.editIndex !== null || batch().imeis.length) {
+    notify("Сначала закончи текущую партию или сохрани правку.", true);
+    return;
+  }
+  const original = group.batches.splice(batchIndex, 1)[0];
+  current.batchEdit = { original, previousSupplier: current.active, previousBatch: current.batch };
+  current.active = supplierIndex;
+  current.batch = structuredClone(original);
+  current.editIndex = batchIndex;
+  refresh("Партия открыта для правки.");
+  animatePartyTransition(null, $("suppliers").querySelector(".batch-line.editing"), true);
+}
+function snapshotBatchCard() {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return null;
+  const card = $("workLeft").closest(".card");
+  const rect = actionRect(card);
+  if (!rect) return null;
+  const snapshot = card.cloneNode(true);
+  snapshot.querySelector("#startLeft")?.remove();
+  snapshot.querySelectorAll("[id], [for], [aria-controls], [aria-describedby]").forEach(node => {
+    for (const attribute of ["id", "for", "aria-controls", "aria-describedby"]) node.removeAttribute(attribute);
+  });
+  snapshot.classList.add("batch-card-out");
+  snapshot.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
+  snapshot.inert = true;
+  snapshot.setAttribute("aria-hidden", "true");
+  return snapshot;
+}
+function animatePartyTransition(previousCard, row, editing = false) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+  document.querySelector(".batch-card-out")?.remove();
+  const card = $("workLeft").closest(".card");
+  card.getAnimations().find(animation => animation.id === "party-card-in")?.cancel();
+  const ease = "cubic-bezier(.22,.72,.25,1)";
+  if (previousCard) {
+    document.body.append(previousCard);
+    const leave = previousCard.animate([
+      { opacity: 1, transform: "none" },
+      { opacity: 0.78, transform: "translateY(-3px) scale(.99)", offset: 0.33 },
+      { opacity: 0, transform: "translateY(-15px) scale(.96)" }
+    ], { duration: 320, easing: "cubic-bezier(.4,0,.3,1)", fill: "forwards" });
+    leave.finished.then(() => previousCard.remove(), () => previousCard.remove());
+  }
+  const cardIn = card.animate([
+    { opacity: editing ? 0.45 : 0.7, transform: `translateY(${editing ? 15 : 8}px) scale(.985)` },
+    { opacity: 1, transform: "none" }
+  ], { duration: editing ? 390 : 330, delay: previousCard ? 65 : 0, fill: "backwards", easing: ease });
+  cardIn.id = "party-card-in";
+  if (row) row.animate([
+    { opacity: 0.62, transform: `translateX(${editing ? -5 : -12}px)` },
+    { opacity: 1, transform: "none" }
+  ], { duration: 310, delay: previousCard ? 125 : 0, fill: "backwards", easing: ease });
+}
+function animateUpdate(node) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+  node.getAnimations().forEach(animation => animation.cancel());
+  node.animate([{ opacity: 0.55 }, { opacity: 1 }], { duration: 180, easing: "ease-out" });
+}
+function refresh(message = "", anchor = actionRect(document.activeElement)) {
+  scanFeedback();
+  const saved = save();
+  render();
+  notify(saved ? message : "Изменения пока только в открытой вкладке.", !saved,
+    typeof anchor === "function" ? anchor() : anchor);
+  focusScan();
+}
+async function closeBatch(acceptEdit = false, suggestOtherSupplier = false) {
+  const current = draft();
+  const editing = current.editIndex !== null;
+  if (editing && !acceptEdit) {
+    notify("Сначала сохрани или отмени правку партии.", true);
+    return false;
+  }
+  let saved = true;
+  if (batch().imeis.length) {
+    if (!filled()) {
+      notify(batch().model ? "Выбери память и цвет для текущей партии." : "Выбери модель, память и цвет для текущей партии.", true);
+      return false;
+    }
+    const active = supplier();
+    let destination = active;
+    if (matchingBatch(active.batches, batch())) {
+      if (!await askAction("Объединить партии?", `У поставщика «${active.name}» уже есть партия «${batchName(batch())}».`, "Присоединить IMEI", { cancel: "Вернуться к партии" })) return false;
+    } else if (suggestOtherSupplier && !editing) {
+      for (const other of current.suppliers) {
+        if (other === active || !matchingBatch(other.batches, batch())) continue;
+        if (await askAction("Совпадение у другого поставщика", `У поставщика «${other.name}» уже есть партия «${batchName(batch())}». Можно добавить IMEI туда или оставить их у «${active.name}».`, "Присоединить IMEI", { cancel: "Пропустить совпадение" })) {
+          destination = other;
+          break;
+        }
+      }
+    }
+    const items = destination.batches;
+    saved = addOrMergeBatch(items, batch(), current.editIndex ?? items.length);
+    items.sort(compareBatchModels);
+  }
+  current.batch = current.batchEdit?.previousBatch ?? newBatch();
+  current.active = current.batchEdit?.previousSupplier ?? current.active;
+  current.editIndex = null;
+  delete current.batchEdit;
+  return saved;
+}
+function hasImei(imei, exceptIndex = null) {
+  return batch().imeis.some((value, index) => value === imei && index !== exceptIndex)
+    || draft().suppliers.some(group => group.batches.some(item => item.imeis.includes(imei)));
+}
+function changeImeiRow(line, update) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    update();
+    return;
+  }
+  const previousHeight = line.getBoundingClientRect().height;
+  line.getAnimations().find(animation => animation.id === "imei-row-size")?.cancel();
+  update();
+  const nextHeight = line.getBoundingClientRect().height;
+  const timing = { duration: 220, easing: "cubic-bezier(.22,.72,.25,1)" };
+  if (Math.abs(previousHeight - nextHeight) > 0.5) {
+    const size = line.animate([
+      { height: `${previousHeight}px` }, { height: `${nextHeight}px` }
+    ], timing);
+    size.id = "imei-row-size";
+  }
+  const content = line.firstElementChild;
+  content?.animate([
+    { opacity: 0.82, transform: "translateY(3px)" },
+    { opacity: 1, transform: "none" }
+  ], timing);
+}
+function animateAcceptedImei(imei, from) {
+  const scans = $("scans");
+  const scrollStart = scans.scrollTop;
+  const scrollEnd = Math.max(0, scans.scrollHeight - scans.clientHeight);
+  if (!from || !matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    scans.scrollTop = scrollEnd;
+    return;
+  }
+  const row = scans.lastElementChild;
+  const destination = row?.querySelector(".scan-code");
+  const to = actionRect(destination);
+  if (!to) return;
+  const marker = el("span", imei, "imei-flight");
+  marker.setAttribute("aria-hidden", "true");
+  marker.style.left = `${from.left + 5}px`;
+  marker.style.top = `${from.top + from.height / 2}px`;
+  document.body.append(marker);
+  const x = to.left - from.left - 5;
+  const scrollDistance = scrollEnd - scrollStart;
+  const y = to.top + to.height / 2 - from.top - from.height / 2 - scrollDistance;
+  const timing = { duration: 240, easing: "cubic-bezier(.22,.65,.27,1)" };
+  const reveal = row.animate([
+    { opacity: 0 }, { opacity: 0, offset: 0.68 }, { opacity: 1 }
+  ], timing);
+  const flight = marker.animate([
+    { transform: "translateY(-50%)", opacity: 1 },
+    { transform: `translate(${x * .92}px, calc(-50% + ${y * .92}px))`, opacity: 1, offset: 0.68 },
+    { transform: `translate(${x}px, calc(-50% + ${y}px))`, opacity: 0 }
+  ], timing);
+  if (scrollDistance > 0) {
+    const scrollWithFlight = () => {
+      if (!marker.isConnected || scans.scrollTop >= scrollEnd) return;
+      const progress = Math.min(1, Number(flight.currentTime) / timing.duration);
+      scans.scrollTop = scrollStart + scrollDistance * (1 - (1 - progress) ** 4);
+      if (progress < 1) requestAnimationFrame(scrollWithFlight);
+    };
+    requestAnimationFrame(scrollWithFlight);
+  }
+  flight.finished.then(() => {
+    if (marker.isConnected) scans.scrollTop = scrollEnd;
+    marker.remove();
+  }, () => {
+    marker.remove();
+    reveal.cancel();
+  });
+}
+function openImeiEditor(line, index) {
+  document.querySelector(".imei-flight")?.remove();
+  const previousForm = $("scans").querySelector(".scan-item > .imei-edit");
+  if (previousForm) {
+    const previousRow = previousForm.parentElement;
+    changeImeiRow(previousRow, () => renderScanRow(previousRow, Number(previousForm.dataset.scanIndex)));
+  }
+  const form = el("form", undefined, "row imei-edit");
+  form.dataset.scanIndex = index;
+  const input = el("input", undefined, "mono");
+  input.inputMode = "numeric";
+  input.autocomplete = "off";
+  input.value = batch().imeis[index];
+  input.setAttribute("aria-label", "Редактировать IMEI");
+  input.setAttribute("aria-describedby", "editImeiError");
+  const error = el("div", "", "notice error");
+  error.id = "editImeiError";
+  error.setAttribute("role", "status");
+  const cancel = () => {
+    changeImeiRow(line, () => renderScanRow(line, index));
+    focusScan();
+  };
+  const submit = el("button", "Сохранить", "primary");
+  submit.type = "submit";
+  form.append(input, submit, button("Отмена", cancel, "quiet"), error);
+  changeImeiRow(line, () => line.replaceChildren(form));
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const imei = input.value.trim();
+    if (!imeiPattern.test(imei)) {
+      error.textContent = "IMEI должен состоять из 15 цифр.";
+    } else if (hasImei(imei, index)) {
+      error.textContent = "Этот IMEI уже есть в добавке.";
+    } else {
+      batch().imeis[index] = imei;
+      const saved = save();
+      notify(saved ? "IMEI сохранён." : "Новый IMEI пока только в открытой вкладке.", !saved);
+      cancel();
+      return;
+    }
+    input.select();
+  });
+  form.addEventListener("keydown", event => {
+    if (event.key === "Escape") { event.preventDefault(); cancel(); }
+  });
+  input.focus({ preventScroll: true });
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+function removeScan(index) {
+  batch().imeis.splice(index, 1);
+  refresh("IMEI убран.");
+}
+function fileName(name) { return name.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim().replace(/\.+$/, "") || "Добавка"; }
+function download(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const link = el("a");
+  link.href = url;
+  link.download = name;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30_000);
+}
+function formatAdditionSummary(batches) {
+  const rows = new Map();
+  for (const item of batches) {
+    if (!item.imeis.length) continue;
+    const spec = modelSpec(item.model);
+    const color = canonicalColor(item.model, item.color);
+    const heart = spec?.colors.find(option => option.label === color)?.emoji;
+    const standard = item.model && item.memory && item.color && (!item.importedName || heart);
+    const fullLabel = standard ? `${item.model} ${item.memory}` : (item.importedName || item.model);
+    const label = fullLabel.replace(/^iPhone\s+/i, "").replace(/(\d)\s*(?:gb|гб)(?=\s|$)/gi, "$1");
+    const key = JSON.stringify([fullLabel, Boolean(item.hasError)]);
+    if (!rows.has(key)) {
+      rows.set(key, { label: withErrorSuffix(item, label), model: item.model, spec, memory: item.memory, colors: new Map() });
+    }
+    const colors = rows.get(key).colors;
+    const marker = standard ? (heart || ` ${color}`) : "";
+    colors.set(marker, (colors.get(marker) ?? 0) + item.imeis.length);
+  }
+  return [...rows.values()].sort((left, right) =>
+    compareBatchModels(left, right) || Number(left.memory) - Number(right.memory)
+  ).map(row => {
+    const order = row.spec?.colors.map(color => color.emoji) ?? [];
+    const colors = [...row.colors].sort(([left], [right]) =>
+      (order.includes(left) ? order.indexOf(left) : order.length) -
+      (order.includes(right) ? order.indexOf(right) : order.length));
+    return `${row.label} - ${colors.map(([marker, count]) => `${count}${marker}`).join(" ")}`;
+  }).join("\n");
+}
+function showAdditionSummary(batches, pendingCount = 0) {
+  const value = formatAdditionSummary(batches);
+  const field = $("summaryText");
+  field.value = value;
+  field.rows = Math.max(2, Math.min(8, value.split("\n").length));
+  $("copySummary").disabled = !value;
+  $("summaryStatus").textContent = "";
+  $("summaryHint").hidden = !pendingCount;
+  $("summaryHint").textContent = pendingCount
+    ? `Сканов в незаполненной партии: ${pendingCount}. Заполни конфигурацию, чтобы включить их в выжимку.`
+    : "";
+  showAnimatedDialog($("summaryDialog"));
+}
+$("openSummary").onclick = () => {
+  const current = batch();
+  const complete = filled();
+  const batches = draft().suppliers.flatMap(group => group.batches);
+  if (complete) batches.push(current);
+  showAdditionSummary(batches, complete ? 0 : current.imeis.length);
+};
+$("copySummary").onclick = async () => {
+  const field = $("summaryText");
+  try {
+    await navigator.clipboard.writeText(field.value);
+    $("summaryStatus").textContent = "Скопировано";
+  } catch {
+    field.focus();
+    field.select();
+    $("summaryStatus").textContent = document.execCommand?.("copy") ? "Скопировано" : "Нажми Ctrl+C, чтобы скопировать.";
+  }
+};
+function exportEntry(entry) {
+  download(createXlsx(entry.suppliers), fileName(entry.name) + ".xlsx");
+}
+const selectedHistory = new Set();
+const actionIconPaths = {
+  edit: "M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z",
+  download: "M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4",
+  remove: "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m-6 5v6m4-6v6"
+};
+function iconAction(label, icon, action, tone = "") {
+  const control = button("", action, `icon-action ${tone}`);
+  control.title = label;
+  control.setAttribute("aria-label", label);
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  for (const [key, value] of Object.entries({
+    viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2",
+    "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true"
+  })) svg.setAttribute(key, value);
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", actionIconPaths[icon]);
+  svg.append(path);
+  control.append(svg);
+  return control;
+}
+function updateHistorySelection() {
+  $("historySelection").hidden = $("history").hidden || !selectedHistory.size;
+  $("historySelectedCount").textContent = `Выбрано: ${selectedHistory.size}`;
+}
+async function deleteHistory(entries) {
+  const removed = new Set(entries);
+  const label = removed.size === 1 ? `«${entries[0].name}»` : `выбранные добавки (${removed.size})`;
+  if (!removed.size || !await askAction("Удалить из истории?", label, "Удалить", { danger: true })) return;
+  const next = { ...state, history: state.history.filter(entry => !removed.has(entry)) };
+  const motion = matchMedia("(prefers-reduced-motion: no-preference)").matches;
+  const before = motion ? new Map(Array.from($("historyList").children, (node, index) =>
+    [state.history[index], { node, rect: node.getBoundingClientRect() }])) : new Map();
+  if (!save(next)) return;
+  state = next;
+  renderHistory();
+  if (motion) animateHistoryRemoval(before, removed);
+  notify("Удалено из истории.");
+  return true;
+}
+function animateHistoryRemoval(before, removed) {
+  const timing = { duration: 280, easing: "cubic-bezier(.22,.72,.25,1)" };
+  for (const [index, card] of Array.from($("historyList").querySelectorAll(".history-card")).entries()) {
+    const old = before.get(state.history[index])?.rect;
+    if (!old) continue;
+    const offset = old.top - card.getBoundingClientRect().top;
+    if (Math.abs(offset) < 1) continue;
+    card.animate([{ transform: `translateY(${offset}px)` }, { transform: "none" }], timing);
+  }
+  for (const entry of removed) {
+    const old = before.get(entry);
+    if (!old) continue;
+    const ghost = old.node.cloneNode(true);
+    ghost.classList.add("history-removing");
+    ghost.inert = true;
+    ghost.style.cssText = `left:${old.rect.left}px;top:${old.rect.top}px;width:${old.rect.width}px`;
+    document.body.append(ghost);
+    ghost.animate([
+      { transform: "none", clipPath: "inset(0 round 20px)" },
+      { transform: "translateX(-20px)", clipPath: "inset(48% 0 48% 0 round 20px)", opacity: 0 }
+    ], timing).finished.then(() => ghost.remove(), () => ghost.remove());
+  }
+}
+function closeHistoryDetail(afterClose) {
+  closeAnimatedDialog($("detail"), afterClose);
+}
+function closeAnimatedDialog(dialog, afterClose, returnValue = dialog.returnValue) {
+  const finish = () => {
+    dialog.inert = false;
+    dialog.close(returnValue);
+    afterClose?.();
+  };
+  if (!dialog.open || !matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    finish();
+    return;
+  }
+  if (dialog.inert) return;
+  const start = getComputedStyle(dialog);
+  const firstFrame = { transform: start.transform, clipPath: start.clipPath === "none" ? "inset(0 round 20px)" : start.clipPath };
+  dialog.inert = true;
+  dialog.getAnimations().forEach(animation => animation.cancel());
+  const exit = dialog.animate([
+    firstFrame,
+    { transform: "translateY(12px) scale(.985)", clipPath: "inset(0 0 100% 0 round 20px)" }
+  ], { duration: 220, easing: "cubic-bezier(.4,0,.6,1)", fill: "forwards" });
+  exit.onfinish = () => { exit.cancel(); finish(); };
+}
+function viewSavedBatch(group, item) {
+  $("detailMetadata").hidden = true;
+  const dialog = $("detail");
+  dialog.classList.add("is-batch-preview");
+  $("detailTitle").textContent = batchName(item);
+  const context = $("detailContext");
+  const otherWork = draft().editIndex !== null || batch().imeis.length > 0;
+  context.hidden = false;
+  context.textContent = `${group.name} · ${item.imeis.length} шт.` +
+    (otherWork ? " · Для правки сначала закончи текущую партию." : "");
+  const list = el("ol", undefined, "batch-preview-list");
+  list.append(...item.imeis.map(imei => el("li", imei, "mono")));
+  $("detailBody").replaceChildren(list);
+  $("downloadHistoryEntry").hidden = true;
+  $("historySummary").hidden = true;
+  const remove = $("deleteDetailEntry");
+  remove.textContent = "Удалить партию";
+  remove.disabled = draft().editIndex !== null;
+  remove.onclick = async () => {
+    if (await deleteSavedBatch(group, item, remove)) closeHistoryDetail();
+  };
+  $("editHistoryEntry").disabled = otherWork;
+  $("editHistoryEntry").onclick = () => closeHistoryDetail(() => editSavedBatch(group, item));
+  showDetail();
+}
+function viewHistoryEntry(entry, location = {}) {
+  $("detail").classList.remove("is-batch-preview");
+  $("detailContext").hidden = true;
+  $("downloadHistoryEntry").hidden = false;
+  $("historySummary").hidden = false;
+  $("historySummary").onclick = () => showAdditionSummary(entry.suppliers.flatMap(group => group.batches));
+  const remove = $("deleteDetailEntry");
+  remove.textContent = "Удалить добавку";
+  remove.disabled = false;
+  remove.onclick = async () => {
+    if (await deleteHistory([entry])) closeHistoryDetail();
+  };
+  $("editHistoryEntry").disabled = false;
+  let foundMatch = location.entryName ? $("detailTitle") : null;
+  let matchContext = null;
+  $("detailTitle").textContent = entry.name;
+  $("detailMetadata").hidden = false;
+  $("detailSavedAt").dateTime = entry.date;
+  $("detailSavedAt").textContent = historyDate(entry, true);
+  $("detailPhoneCount").textContent = totalCount(entry.suppliers);
+  $("detailSupplierCount").textContent = entry.suppliers.length;
+  const table = el("table", undefined, "history-table");
+  const head = table.createTHead().insertRow();
+  for (const title of ["Название", "Категория", "Артикул", "Количество"]) {
+    const cell = el("th", title);
+    cell.scope = "col";
+    head.append(cell);
+  }
+  const body = table.createTBody();
+  const suppliers = entry.suppliers.filter(group => supplierCount(group) > 0);
+  suppliers.forEach((group, index) => {
+    if (index) {
+      const separator = body.insertRow();
+      separator.className = "history-separator";
+      separator.setAttribute("aria-hidden", "true");
+      separator.insertCell().colSpan = 4;
+    }
+    if (location.group === group && !location.item) {
+      matchContext = body.insertRow();
+      const cell = matchContext.insertCell();
+      cell.colSpan = 4;
+      cell.className = "search-supplier-cell";
+      cell.textContent = group.name;
+      foundMatch = cell;
+    }
+    for (const item of group.batches) {
+      for (const imei of item.imeis) {
+        const row = body.insertRow();
+        const name = el("td", batchName(item));
+        const article = el("td", imei, "mono");
+        if (!foundMatch && location.item === item && (!location.imei || location.imei === imei)) {
+          foundMatch = location.imei ? article : name;
+        }
+        row.append(name, el("td", item.model), article, el("td", "1"));
+      }
+    }
+  });
+  $("detailBody").replaceChildren(table);
+  $("editHistoryEntry").onclick = () => openHistoryDraft(entry);
+  $("downloadHistoryEntry").onclick = () => exportEntry(entry);
+  showDetail();
+  if (foundMatch) showSearchMatch(foundMatch, matchContext);
+}
+function showDetail() {
+  showAnimatedDialog($("detail"));
+  $("detailBody").scrollTop = 0;
+}
+function showAnimatedDialog(dialog) {
+  dialog.showModal();
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    dialog.animate([
+      { transform: "translateY(12px) scale(.985)", clipPath: "inset(0 0 75% 0 round 20px)" },
+      { transform: "none", clipPath: "inset(0 round 20px)" }
+    ], { duration: 300, easing: "cubic-bezier(.22,.72,.25,1)" });
+  }
+}
+function historyDuplicateNumbers() {
+  const groups = new Map();
+  for (const entry of state.history) {
+    const key = entry.name.trim().toLocaleLowerCase("ru-RU").replace(/\s+/g, " ");
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(entry);
+  }
+  const numbers = new Map();
+  for (const entries of groups.values()) {
+    if (entries.length < 2) continue;
+    entries.reverse().forEach((entry, index) => numbers.set(entry, index + 1));
+  }
+  return numbers;
+}
+function historyDate(entry, includeTime) {
+  const date = dateLabel(entry.date);
+  const time = new Date(entry.date).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+  return includeTime ? `${date} · ${time}` : date;
+}
+function renderHistory() {
+  const duplicateNumbers = historyDuplicateNumbers();
+  const available = new Set(state.history);
+  for (const entry of selectedHistory) {
+    if (!available.has(entry)) selectedHistory.delete(entry);
+  }
+  updateHistorySelection();
+  $("historyList").replaceChildren(...(state.history.length ? state.history.map(entry => {
+    const card = el("article", undefined, "card row history-card");
+    const check = el("input", undefined, "history-check");
+    check.type = "checkbox";
+    check.checked = selectedHistory.has(entry);
+    check.setAttribute("aria-label", `Выбрать добавку ${entry.name}`);
+    check.addEventListener("change", () => {
+      if (check.checked) selectedHistory.add(entry);
+      else selectedHistory.delete(entry);
+      card.classList.toggle("is-selected", check.checked);
+      updateHistorySelection();
+    });
+    card.classList.toggle("is-selected", check.checked);
+    const info = el("div", undefined, "history-summary");
+    const heading = el("h3", undefined, "history-heading");
+    const open = () => viewHistoryEntry(entry);
+    const openButton = button(entry.name, open, "history-open");
+    const number = duplicateNumbers.get(entry);
+    heading.append(openButton);
+    if (number) {
+      heading.append(el("span", `№ ${number}`, "badge history-copy-number"));
+      openButton.setAttribute("aria-label", `${entry.name}, номер ${number}`);
+    }
+    info.append(heading, el("small", `${historyDate(entry, number)} · Трубок: ${totalCount(entry.suppliers)} · Поставщиков: ${entry.suppliers.length}`));
+    const actions = el("div", undefined, "row history-actions");
+    actions.append(iconAction("Редактировать", "edit", () => openHistoryDraft(entry)),
+      iconAction("Скачать XLSX", "download", () => exportEntry(entry)),
+      iconAction("Удалить из истории", "remove", () => deleteHistory([entry]), "danger"));
+    card.addEventListener("click", event => {
+      if (!event.target.closest("button, input, label")) open();
+    });
+    const checkHit = el("label", undefined, "history-check-hit");
+    checkHit.append(check);
+    card.append(checkHit, info, actions);
+    return card;
+  }) : [el("p", "Здесь появятся сохранённые добавки.", "muted")]));
+}
+function xlsxArchive(buffer) {
+  const view = new DataView(buffer);
+  const u16 = offset => view.getUint16(offset, true);
+  const u32 = offset => view.getUint32(offset, true);
+  const decoder = new TextDecoder();
+  let end = buffer.byteLength - 22;
+  const min = Math.max(0, end - 65535);
+  while (end >= min && !(u32(end) === 0x06054b50 && end + 22 + u16(end + 20) === buffer.byteLength)) end--;
+  if (end < min) throw new Error("Не удалось открыть файл XLSX.");
+  const entries = new Map();
+  let offset = u32(end + 16);
+  for (let index = 0; index < u16(end + 10); index++) {
+    if (u32(offset) !== 0x02014b50) throw new Error("Повреждён архив XLSX.");
+    const nameLength = u16(offset + 28);
+    const path = decoder.decode(new Uint8Array(buffer, offset + 46, nameLength));
+    entries.set(path, {
+      method: u16(offset + 10), compressed: u32(offset + 20),
+      size: u32(offset + 24), offset: u32(offset + 42)
+    });
+    offset += 46 + nameLength + u16(offset + 30) + u16(offset + 32);
+  }
+  return async path => {
+    const entry = entries.get(path);
+    if (!entry) throw new Error(`В XLSX не найден раздел ${path}.`);
+    if (entry.size > 24 * 1024 * 1024) throw new Error("Лист XLSX слишком большой для импорта.");
+    const { offset, compressed, method } = entry;
+    if (u32(offset) !== 0x04034b50) throw new Error("Повреждён архив XLSX.");
+    const start = offset + 30 + u16(offset + 26) + u16(offset + 28);
+    const bytes = new Uint8Array(buffer, start, compressed);
+    let unpacked = bytes;
+    if (method === 8) {
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+      unpacked = new Uint8Array(await new Response(stream).arrayBuffer());
+    } else if (method !== 0) {
+      throw new Error("Этот способ сжатия XLSX не поддерживается.");
+    }
+    if (unpacked.length !== entry.size) throw new Error("Повреждён архив XLSX.");
+    const xml = new DOMParser().parseFromString(decoder.decode(unpacked), "application/xml");
+    if (xml.getElementsByTagName("parsererror").length) throw new Error("Повреждена структура XLSX.");
+    return xml;
+  };
+}
+function xmlElements(node, name) {
+  return Array.from(node.getElementsByTagNameNS("*", name));
+}
+async function readImportedDraft(file) {
+  if (file.size > 24 * 1024 * 1024) throw new Error("Файл XLSX слишком большой для импорта.");
+  const read = xlsxArchive(await file.arrayBuffer());
+  const [book, rels] = await Promise.all([read("xl/workbook.xml"), read("xl/_rels/workbook.xml.rels")]);
+  const relationships = xmlElements(rels, "Relationship");
+  const workbookPath = target => new URL(target, "https://xlsx.invalid/xl/workbook.xml").pathname.slice(1);
+  const sheet = xmlElements(book, "sheet")[0];
+  const sheetRel = sheet && relationships.find(rel => rel.getAttribute("Id") === sheet.getAttributeNS(
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships", "id"));
+  if (!sheetRel) throw new Error("В файле нет доступного первого листа.");
+  const stringsRel = relationships.find(rel => rel.getAttribute("Type")?.endsWith("/sharedStrings"));
+  const textRuns = node => xmlElements(node, "t").map(part => part.textContent).join("");
+  const [worksheet, strings] = await Promise.all([
+    read(workbookPath(sheetRel.getAttribute("Target"))),
+    stringsRel ? read(workbookPath(stringsRel.getAttribute("Target"))) : null
+  ]);
+  const shared = strings ? xmlElements(strings, "si").map(textRuns) : [];
+  const headers = ["Название", "Категория", "Артикул", "Количество"];
+  const rows = xmlElements(worksheet, "row");
+  function rowValues(row) {
+    const values = ["", "", "", ""];
+    for (const cell of xmlElements(row, "c")) {
+      const column = cell.getAttribute("r")?.match(/^([A-D])\d+$/)?.[1];
+      if (!column) continue;
+      const type = cell.getAttribute("t");
+      const value = xmlElements(cell, "v")[0]?.textContent ?? "";
+      values["ABCD".indexOf(column)] = type === "s" ? (shared[Number(value)] ?? "")
+        : type === "inlineStr" ? textRuns(cell) : value;
+    }
+    return values;
+  }
+  if (!rows.length || !rowValues(rows[0]).every((value, index) => value.trim() === headers[index])) {
+    throw new Error("На первом листе ожидаются колонки «Название», «Категория», «Артикул», «Количество».");
+  }
+  const suppliers = [];
+  const seenImeis = new Set();
+  let lastDataRow = 0;
+  for (const row of rows.slice(1)) {
+    const [name, model, article, quantity] = rowValues(row);
+    if (![name, model, article, quantity].some(value => value.trim())) continue;
+    const number = Number(row.getAttribute("r"));
+    const imei = article.trim().replace(/^'/, "");
+    if (!name.trim() || !model.trim() || !validText(name) || !validText(model)
+        || !imeiPattern.test(imei) || quantity.trim() !== "1") {
+      throw new Error(`Строка ${number}: проверь название, категорию, IMEI из 15 цифр и количество 1.`);
+    }
+    if (seenImeis.has(imei)) throw new Error(`Строка ${number}: IMEI уже встречался выше.`);
+    seenImeis.add(imei);
+    if (!lastDataRow || number > lastDataRow + 1) suppliers.push(newSupplier(suppliers.length + 1));
+    lastDataRow = number;
+    const group = suppliers.at(-1);
+    const hasError = name.endsWith(errorSuffix);
+    const baseName = hasError ? name.slice(0, -errorSuffix.length) : name;
+    const match = baseName.match(/\s(\d+)\s*(Gb|ГБ|TB|ТБ)\s+(.+)$/i);
+    const memory = match ? (/tb|тб/i.test(match[2]) ? String(Number(match[1]) * 1024) : match[1]) : "";
+    const color = match?.[3] ?? "";
+    const item = { model, memory, color, hasError, imeis: [imei] };
+    if (batchName(item) !== name) item.importedName = baseName;
+    const sameRow = group.batches.find(batch => batch.model === model && batchName(batch) === name);
+    if (sameRow) sameRow.imeis.push(imei);
+    else group.batches.push(item);
+  }
+  if (!suppliers.length) throw new Error("В файле нет строк с трубками.");
+  sortSupplierBatches(suppliers);
+  return { ...newDraft(), name: file.name.replace(/\.xlsx$/i, "").slice(0, 100), suppliers };
+}
+$("importXlsx").onclick = () => $("importXlsxFile").click();
+$("importXlsxFile").onchange = async event => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+  const anchor = actionRect($("importXlsx"));
+  $("importXlsx").disabled = true;
+  try {
+    const imported = await readImportedDraft(file);
+    if (draftHasContent(draft()) && !await askAction("Заменить черновик?", `Сейчас в буфере «${draft().name}». Импортированный файл займёт его место.`, "Импортировать", { danger: true })) return;
+    const next = { ...state, draft: imported };
+    if (!save(next)) return;
+    state = next;
+    workContext = "draft";
+    $("scan").value = "";
+    hideOptions();
+    render();
+    resizeWorkspaceCards(false);
+    notify(`Импортировано трубок: ${totalCount(imported.suppliers)}`, false, anchor);
+  } catch (error) {
+    const message = error instanceof RangeError ? "Не удалось прочитать структуру XLSX." : error.message;
+    notify(message, true, anchor);
+  } finally {
+    $("importXlsx").disabled = false;
+  }
+};
+async function openHistoryDraft(entry) {
+  if (draftHasContent(draft()) && !await askAction("Заменить черновик?", `Сейчас в буфере «${draft().name}». Копия из истории займёт его место.`, "Открыть копию", { danger: true })) return;
+  const suppliers = structuredClone(entry.suppliers);
+  if (!suppliers.length) suppliers.push(newSupplier(1));
+  renumberSuppliers(suppliers);
+  sortSupplierBatches(suppliers);
+  const next = { ...state, draft: { ...newDraft(), name: entry.name, suppliers } };
+  if (!save(next)) return;
+  state = next;
+  workContext = "history";
+  closeHistoryDetail(() => {
+    $("scan").value = "";
+    hideOptions();
+    render();
+    setTab(false, false, modelInput);
+  });
+}
+let searchMatch = null;
+let searchMatchContext = null;
+let searchMatchTimer;
+function clearSearchMatch() {
+  clearTimeout(searchMatchTimer);
+  searchMatch?.removeAttribute("data-search-match");
+  if (searchMatchContext?.classList.contains("search-hit-slot")) animateSearchHit(searchMatchContext, false);
+  else searchMatchContext?.remove();
+  searchMatch = null;
+  searchMatchContext = null;
+}
+function animateSearchHit(slot, entering) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    if (!entering) slot.remove();
+    return;
+  }
+  const height = slot.getBoundingClientRect().height;
+  slot.getAnimations().forEach(animation => animation.cancel());
+  const animation = slot.animate([
+    { height: "0px", opacity: 0 },
+    { height: `${height}px`, opacity: 1 }
+  ], { duration: 200, easing: "cubic-bezier(.22,.72,.25,1)", direction: entering ? "normal" : "reverse" });
+  if (!entering) animation.finished.then(() => slot.remove(), () => slot.remove());
+}
+function showSearchMatch(node, context = null) {
+  clearSearchMatch();
+  if (!node) return;
+  searchMatch = node;
+  searchMatchContext = context;
+  node.setAttribute("data-search-match", "");
+  const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+  node.scrollIntoView({ block: "nearest", inline: "nearest", behavior });
+  searchMatchTimer = setTimeout(clearSearchMatch, 2800);
+}
+document.addEventListener("pointerdown", event => {
+  if (searchMatch && !searchMatch.contains(event.target)) clearSearchMatch();
+});
+function openSearchResult(entry, source, group, item, imei) {
+  closeAnimatedDialog($("searchDialog"), () => revealSearchResult(entry, source, group, item, imei));
+}
+function revealSearchResult(entry, source, group, item, imei) {
+  if (source === "history") {
+    if ($("history").hidden) {
+      returnToStart = !$("workspace").hidden && $("workLeft").hidden;
+      setTab(true);
+    }
+    viewHistoryEntry(entry, { group, item, imei, entryName: !group && !item });
+    return;
+  }
+  if ($("workspace").hidden || $("workLeft").hidden) {
+    workContext = "draft";
+    setTab(false);
+  }
+  if (item === draft().batch) {
+    const target = imei ? Array.from($("scans").querySelectorAll(".scan-code")).find(control => control.textContent === imei) : $("model");
+    showSearchMatch(target);
+    return;
+  }
+  const name = renderedBatchRows.get(item)?.querySelector(".batch-name");
+  if (name && imei) {
+    const exact = el("span", imei, "mono search-hit-imei");
+    const slot = el("span", undefined, "search-hit-slot");
+    slot.append(exact);
+    name.append(slot);
+    showSearchMatch(exact, slot);
+    animateSearchHit(slot, true);
+    return;
+  }
+  showSearchMatch(name ?? renderedSupplierHeaders.get(group)?.querySelector(".supplier-name") ?? $("draftName"));
+}
+function renderSearch() {
+  const typed = $("searchQuery").value;
+  $("clearSearchQuery").hidden = !typed;
+  const query = foldColor(typed.trim());
+  const words = query.split(/\s+/);
+  const matches = value => words.every(word => foldColor(value).includes(word));
+  const results = $("searchResults");
+  results.replaceChildren();
+  if (!query) {
+    $("searchSummary").textContent = "Текущая добавка и история";
+    return;
+  }
+  const output = [];
+  const duplicateNumbers = historyDuplicateNumbers();
+  let count = 0;
+  function add(title, description, action) {
+    count++;
+    if (output.length >= 60) return;
+    const control = button("", action, "quiet search-result");
+    control.append(el("span", title), el("small", description));
+    output.push(control);
+  }
+  function collect(entry, source) {
+    const number = duplicateNumbers.get(entry);
+    const origin = source === "draft" ? "Текущая добавка"
+      : (number ? `№ ${number} · ` : "") + historyDate(entry, number);
+    if (matches(entry.name)) add(entry.name, origin, () => openSearchResult(entry, source));
+    for (const [index, group] of entry.suppliers.entries()) {
+      const description = `${group.name} · ${entry.name} · ${origin}`;
+      if (matches(group.name)) add(group.name, `${entry.name} · ${origin}`, () => openSearchResult(entry, source, group));
+      const items = source === "draft" && index === entry.active ? [...group.batches, entry.batch] : group.batches;
+      for (const item of items) {
+        if (!item.model && !item.imeis.length) continue;
+        const name = item.model ? modelDisplay(item) : "Партия без конфигурации";
+        if (matches(name)) add(name, description, () => openSearchResult(entry, source, group, item));
+        for (const imei of item.imeis) {
+          if (words.some(word => imei.includes(word)) && matches(`${imei} ${name} ${group.name} ${entry.name}`)) {
+            add(imei, `${name} · ${description}`, () => openSearchResult(entry, source, group, item, imei));
+          }
+        }
+      }
+    }
+    if (source === "draft" && entry.configBuffer && matches(modelDisplay(entry.configBuffer))) {
+      add(modelDisplay(entry.configBuffer), "Из буфера", () => {
+        openSearchResult(entry, source);
+        showSearchMatch($("configBuffer"));
+      });
+    }
+  }
+  if (draftHasContent(draft())) collect(draft(), "draft");
+  state.history.forEach(entry => collect(entry, "history"));
+  results.append(...output);
+  $("searchSummary").textContent = count > output.length ? `Первые ${output.length} из ${count}`
+    : count ? `Найдено: ${count}` : "Ничего не найдено.";
+}
+function openSearch() {
+  const dialog = $("searchDialog");
+  if (dialog.open || $("appConfirm").open || $("detail").open) return;
+  $("searchQuery").value = "";
+  renderSearch();
+  showAnimatedDialog(dialog);
+}
+$("openSearch").onclick = openSearch;
+$("closeSearch").onclick = () => closeAnimatedDialog($("searchDialog"));
+for (const id of ["summaryDialog", "searchDialog", "appConfirm"]) {
+  const dialog = $(id);
+  dialog.addEventListener("cancel", event => {
+    event.preventDefault();
+    closeAnimatedDialog(dialog);
+  });
+  dialog.querySelector('form[method="dialog"]')?.addEventListener("submit", event => {
+    event.preventDefault();
+    closeAnimatedDialog(dialog, undefined, event.submitter?.value ?? "");
+  });
+}
+$("searchQuery").addEventListener("input", renderSearch);
+$("clearSearchQuery").onclick = () => {
+  $("searchQuery").value = "";
+  renderSearch();
+  $("searchQuery").focus();
+};
+$("searchQuery").addEventListener("keydown", event => {
+  if (event.key !== "ArrowDown") return;
+  const first = $("searchResults").querySelector("button");
+  if (!first) return;
+  event.preventDefault();
+  first.focus();
+});
+$("searchResults").addEventListener("keydown", event => {
+  if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+  const next = event.key === "ArrowDown" ? event.target.nextElementSibling : event.target.previousElementSibling;
+  event.preventDefault();
+  if (next) next.focus();
+  else if (event.key === "ArrowUp") $("searchQuery").focus();
+});
+function draftHasContent(item) {
+  return item.name !== newDraft().name || Boolean(item.batch.model || item.batch.imeis.length)
+    || item.suppliers.length > 1 || item.suppliers[0].name !== "Поставщик 1"
+    || totalCount(item.suppliers) > 0;
+}
+async function startNewDraft() {
+  if (draftHasContent(draft()) && !await askAction("Заменить черновик?", `Сейчас в буфере «${draft().name}». Новая добавка займёт его место.`, "Создать новую", { danger: true })) return;
+  const next = { ...state, draft: newDraft() };
+  if (!save(next)) return;
+  state = next;
+  workContext = "new";
+  $("scan").value = "";
+  hideOptions();
+  render();
+  notify();
+  setTab(false, false, modelInput);
+}
+function updateResumeButton() {
+  const hasBuffer = draftHasContent(draft());
+  $("resumeDraft").disabled = !hasBuffer;
+  $("bufferName").textContent = hasBuffer ? draft().name : "Буфер пуст";
+  $("bufferName").title = $("bufferName").textContent;
+}
+let returnToStart = true;
+let workContext = "new";
+const contextLabels = { new: "✨ НОВЫЙ", draft: "📂 ЧЕРНОВИК", history: "📜 ИЗ ИСТОРИИ" };
+function setTab(history, drafts = false, workFocus = $("scan")) {
+  clearSearchMatch();
+  for (const card of $("workspace").querySelectorAll(".card")) {
+    card.getAnimations().find(animation => animation.id === "workspace-card-size")?.cancel();
+  }
+  notify();
+  scanFeedback();
+  const switchingSection = $("history").hidden === history;
+  const switchingWorkspace = !history && !$("workspace").hidden && $("workLeft").hidden !== drafts;
+  for (const id of ["startLeft", "startRight"]) {
+    $(id).classList.toggle("panel-leaving", switchingWorkspace && !drafts);
+    $(id).classList.toggle("panel-entering", switchingWorkspace && drafts);
+    $(id).inert = !drafts;
+  }
+  for (const id of ["workLeft", "workRight"]) {
+    $(id).classList.toggle("panel-leaving", switchingWorkspace && drafts);
+    $(id).classList.toggle("panel-entering", switchingWorkspace && !drafts);
+    $(id).inert = drafts || history;
+  }
+  $("workspace").hidden = history;
+  $("startLeft").hidden = $("startRight").hidden = !drafts;
+  $("workLeft").hidden = $("workRight").hidden = drafts;
+  $("history").hidden = !history;
+  const working = !history && !drafts;
+  const context = $("draftContext");
+  if (working) context.textContent = contextLabels[workContext];
+  context.parentElement.classList.toggle("in-work", working);
+  context.setAttribute("aria-hidden", String(!working));
+  $("homeCaption").setAttribute("aria-hidden", String(working));
+  $("homeCaption").textContent = history ? "Добавки хранятся в этом браузере" : "Сканирование поставок для Hello Client";
+  $("appTitle").textContent = history ? "История добавок" : "Добавка";
+  const activeTool = history ? "backupActions" : working ? "clearDraft" : "importXlsx";
+  for (const id of ["backupActions", "clearDraft", "importXlsx"]) {
+    $(id).classList.toggle("is-active", id === activeTool);
+    $(id).inert = id !== activeTool;
+  }
+  setBackupMenu(false);
+  updateHistorySelection();
+  if (!working) closeDraftNameEditor(true);
+  const titleChanged = switchingSection || $("appTitle").hidden !== working;
+  $("appTitle").hidden = working;
+  $("workTitle").hidden = !working;
+  document.title = working ? draft().name : "Добавка";
+  if (titleChanged) animateUpdate(working ? $("draftName") : $("appTitle"));
+  $("homeSlot").classList.toggle("open", working || history);
+  $("homeSlot").inert = !working && !history;
+  $("workTab").hidden = history;
+  $("historyBack").hidden = !history;
+  $("workTab").setAttribute("aria-current", working ? "page" : "false");
+  $("historyTab").setAttribute("aria-current", history ? "page" : "false");
+  const screen = history ? $("history") : $("workspace");
+  $("history").classList.remove("screen-arriving");
+  $("workspace").classList.remove("screen-arriving");
+  if (switchingSection) {
+    screen.style.setProperty("--screen-offset", history ? "18px" : "-18px");
+    screen.classList.add("screen-arriving");
+  }
+  if (history) renderHistory();
+  else if (drafts) updateResumeButton();
+  else workFocus.focus({ preventScroll: true });
+}
+function modelDisplay(item) {
+  return withErrorSuffix(item, item.importedName ?? [item.model, item.memory && `${item.memory} Gb`, item.color].filter(Boolean).join(" "));
+}
+const modelInput = $("model");
+const modelOptions = $("modelOptions");
+let matches = [];
+let optionIndex = -1;
+let editedPart = null;
+function hideOptions() {
+  if (editedPart) clearMemoryGhost();
+  editedPart = null;
+  modelOptions.hidden = true;
+  modelInput.setAttribute("aria-expanded", "false");
+  modelInput.removeAttribute("aria-activedescendant");
+}
+const modelPartOrder = ["model", "memory", "color"];
+function selectOption(index, advance = false) {
+  const option = matches[index];
+  if (!option) return;
+  if (option.customName) {
+    delete batch().importedName;
+    Object.assign(batch(), { model: option.customName, memory: "", color: "" });
+    finishModelChange(advance ? "memory" : undefined);
+    return;
+  }
+  const key = editedPart?.key ?? "model";
+  applyModel(option.spec, option.memory, option.color, undefined,
+    advance ? modelPartOrder[modelPartOrder.indexOf(key) + 1] : undefined);
+}
+function applyModel(spec, memory, color, hasError, nextPart) {
+  if (batch().model !== spec.name || (memory && memory !== batch().memory) || (color && color !== batch().color)) {
+    delete batch().importedName;
+  }
+  const current = batch();
+  if (current.model !== spec.name) {
+    const previousColor = canonicalColor(spec.name, current.color);
+    current.model = spec.name;
+    if (!spec.memory.includes(current.memory)) current.memory = "";
+    current.color = spec.colors.some(option => option.label === previousColor) ? previousColor : "";
+  }
+  if (memory) batch().memory = memory;
+  if (color) batch().color = color;
+  if (hasError) {
+    batch().hasError = true;
+  }
+  finishModelChange(nextPart);
+}
+function finishModelChange(nextPart) {
+  hideOptions();
+  clearMemoryGhost();
+  save();
+  renderSetup();
+  renderSuppliers();
+  notify();
+  if (nextPart && focusModelPart(nextPart)) return;
+  if (filled()) focusScan();
+  else modelInput.setSelectionRange(modelInput.value.length, modelInput.value.length);
+}
+function highlightOption(index) {
+  optionIndex = index;
+  Array.from(modelOptions.children).forEach((node, i) => node.setAttribute("aria-selected", String(i === index)));
+  const option = modelOptions.children[index];
+  if (option && matches.length) {
+    modelInput.setAttribute("aria-activedescendant", option.id);
+    option.scrollIntoView({ block: "nearest" });
+  }
+  if (editedPart) renderPartCompletion();
+}
+function modelSearchKey(text) {
+  return text.toLowerCase().replace(/\s+/g, "")
+    .replace(/айф[oо]н/g, "iphone")
+    .replace(/икс(?:[эе]с|[сs])/g, "xs")
+    .replace(/икс[эе]р/g, "xr")
+    .replace(/икс/g, "x")
+    .replace(/х[сc]|x[сc]/g, "xs")
+    .replace(/х[рp]|x[рp]/g, "xr")
+    .replace(/макс|мах/g, "max")
+    .replace(/х/g, "x")
+    .replace(/про/g, "pro")
+    .replace(/(\d)пм$/g, "$1promax")
+    .replace(/(\d)п$/g, "$1pro")
+    .replace(/плюс/g, "plus")
+    .replace(/мини/g, "mini")
+    .replace(/э[ий]р|аир/g, "air")
+    .replace(/эс[эе]|се/g, "se")
+    .replace(/(\d)[еэ]/g, "$1e");
+}
+function modelOptionQuery(text) {
+  const suffix = modelDisplay({ ...batch(), model: "", importedName: undefined }).trim();
+  return suffix ? text.replace(" " + suffix, "") : text;
+}
+function showOptions(query, includeOtherModels = false) {
+  const key = modelSearchKey(modelOptionQuery(query)).replace(/^iphone/, "");
+  const family = key.match(/^\d+/)?.[0];
+  function rank(spec) {
+    const name = modelSearchKey(spec.name).replace(/^iphone/, "");
+    if (!key || name === key) return 0;
+    if (name.startsWith(key)) return 1;
+    if (!key.startsWith("x") && name.includes(key)) return 2;
+    if (includeOtherModels && family && name.match(/^\d+/)?.[0] === family) return 3;
+    return includeOtherModels ? 4 : -1;
+  }
+  const current = batch();
+  const specs = catalog.some(spec => spec.name === current.model) || !current.model
+    ? catalog : [...catalog, modelSpec(current.model)];
+  const options = specs.map(spec => ({ spec, label: spec.name, rank: rank(spec) }))
+    .filter(option => option.rank >= 0).sort((left, right) => left.rank - right.rank);
+  const customName = modelOptionQuery(query).trim();
+  if (!options.length && key && customName.length <= 120) {
+    options.push({ customName, label: `Использовать «${customName}»` });
+  }
+  showPartOptions(options);
+}
+function showPartOptions(options) {
+  matches = options;
+  modelOptions.replaceChildren(...(matches.length ? matches.map((item, index) => {
+    const node = el("li", item.label);
+    node.id = `model-option-${index}`;
+    node.setAttribute("role", "option");
+    node.addEventListener("mousedown", event => event.preventDefault());
+    node.addEventListener("click", () => selectOption(index));
+    return node;
+  }) : [el("li", "Модель не найдена", "muted")]));
+  modelOptions.hidden = false;
+  modelInput.setAttribute("aria-expanded", "true");
+  highlightOption(matches.length ? 0 : -1);
+}
+modelInput.addEventListener("dblclick", event => {
+  if (modelInput.readOnly) return;
+  event.preventDefault();
+  hideOptions();
+  modelInput.select();
+});
+function showEditedPartOptions(query, selected = "") {
+  const { key, spec } = editedPart;
+  if (key === "model") {
+    showOptions(query || selected, !query);
+    return;
+  }
+  const prefix = key === "memory" ? query.trim().replace(/\s*(?:gb|гб)$/i, "") : foldColor(query.trim());
+  const options = key === "memory"
+    ? spec.memory.filter(size => size.startsWith(prefix)).map(memory => ({ spec, memory, label: memory + " ГБ" }))
+    : spec.colors.filter(color => colorSearchNames(spec.name, color.label).some(name => name.startsWith(prefix)))
+      .map(color => ({ spec, color: color.label, label: color.label }));
+  const selectedIndex = options.findIndex(option => (option.memory || option.color) === selected);
+  if (selectedIndex > 0) options.unshift(...options.splice(selectedIndex, 1));
+  showPartOptions(options);
+}
+modelInput.addEventListener("click", event => {
+  if (modelInput.readOnly || event.detail > 1 || modelInput.selectionStart !== modelInput.selectionEnd) return;
+  const current = batch();
+  const spec = modelSpec(current.model);
+  const text = modelInput.value;
+  if (!spec || (current.importedName && current.importedName !== current.model) || text !== modelDisplay(current)) {
+    if (modelOptions.hidden) showOptions(text);
+    return;
+  }
+  const caret = modelInput.selectionStart;
+  let end = 0;
+  for (const key of modelPartOrder) {
+    if (!current[key]) continue;
+    end += (end ? 1 : 0) + modelPartText(current, key).length;
+    if (caret <= end) {
+      focusModelPart(key);
+      return;
+    }
+  }
+  hideOptions();
+});
+function modelPartText(current, key) {
+  return key === "memory" && current.memory ? current.memory + " Gb" : current[key];
+}
+function focusModelPart(key) {
+  const current = batch();
+  const spec = modelSpec(current.model);
+  if (!spec || (current.importedName && current.importedName !== current.model)) return false;
+  const index = modelPartOrder.indexOf(key);
+  const value = modelPartText(current, key);
+  const before = modelPartOrder.slice(0, index).map(part => modelPartText(current, part)).filter(Boolean).join(" ");
+  const after = modelPartOrder.slice(index + 1).map(part => modelPartText(current, part)).filter(Boolean).join(" ");
+  const prefix = before ? before + " " : "";
+  const tail = after + (current.hasError ? errorSuffix : "");
+  const suffix = tail && !tail.startsWith(" ") ? " " + tail : tail;
+  clearMemoryGhost();
+  editedPart = { key, spec, prefix, suffix };
+  modelInput.value = prefix + value + suffix;
+  modelInput.setSelectionRange(prefix.length, prefix.length + value.length);
+  showEditedPartOptions("", current[key]);
+  return true;
+}
+const memoryGhost = $("memoryGhost");
+const memoryGhostText = $("memoryGhostText");
+function clearMemoryGhost() {
+  modelInput.classList.remove("part-completion");
+  memoryGhost.classList.remove("visible");
+  memoryGhostText.replaceChildren();
+}
+function renderPartCompletion() {
+  const option = matches[optionIndex];
+  const { prefix, suffix } = editedPart;
+  const text = modelInput.value;
+  const end = text.length - suffix.length;
+  if (!option || option.customName || modelInput.selectionStart !== end || modelInput.selectionEnd !== end
+      || end <= prefix.length || !text.startsWith(prefix) || !text.endsWith(suffix)) {
+    clearMemoryGhost();
+    return;
+  }
+  const typed = text.slice(prefix.length, end);
+  let label = option.memory ? option.memory + " Gb" : option.label;
+  if (!/^iphone/i.test(typed) && /^iphone /i.test(label)) label = label.slice(7);
+  if (typed.toLowerCase() === label.toLowerCase()) {
+    clearMemoryGhost();
+    return;
+  }
+  const keepsPrefix = label.toLowerCase().startsWith(typed.toLowerCase());
+  memoryGhostText.replaceChildren(
+    el("span", prefix + (keepsPrefix ? typed : ""), "committed"),
+    keepsPrefix ? label.slice(typed.length) : label,
+    el("span", suffix, "committed")
+  );
+  memoryGhostText.style.transform = `translateX(-${modelInput.scrollLeft}px)`;
+  modelInput.classList.add("part-completion");
+  memoryGhost.classList.add("visible");
+}
+function findModelAndMemory(text, matchMemory) {
+  const trailingDigits = text.match(/\d+$/)?.[0] ?? "";
+  for (let length = 1; length <= trailingDigits.length; length++) {
+    const prefix = text.slice(-length);
+    const model = modelSearchKey(text.slice(0, -length)).replace(/^iphone/, "");
+    const currentName = batch().model;
+    const spec = catalog.find(item => modelSearchKey(item.name) === "iphone" + model)
+      ?? (model && modelSearchKey(currentName).replace(/^iphone/, "") === model ? modelSpec(currentName) : undefined);
+    const memory = spec?.memory.find(size => matchMemory(size, prefix));
+    if (memory) return { spec, memory, prefix };
+  }
+  return null;
+}
+function colorCompletion(text) {
+  const colorPrefix = text.match(/[а-яё]+$/i)?.[0];
+  if (!colorPrefix) return null;
+  const beforeColor = text.slice(0, -colorPrefix.length).trim().replace(/\s*(?:gb|гб)$/i, "").trim();
+  const config = findModelAndMemory(beforeColor, (size, prefix) => size === prefix);
+  if (!config) return null;
+  const prefix = foldColor(colorPrefix);
+  for (const color of config.spec.colors) {
+    const matched = colorSearchNames(config.spec.name, color.label).find(name => name.startsWith(prefix));
+    if (!matched) continue;
+    const display = matched === foldColor(color.label) ? color.label : matched;
+    return { ...config, color: color.label, suffix: display.slice(colorPrefix.length) };
+  }
+  return null;
+}
+function modelCompletion() {
+  const text = modelInput.value;
+  if (modelInput.selectionStart !== text.length || modelInput.selectionEnd !== text.length) return null;
+  const errorMatch = text.match(/\(?(ош[а-яё]*)(\)?)$/i);
+  if (errorMatch) {
+    const word = "ошибка";
+    const prefix = errorMatch[1].toLowerCase();
+    if (word.startsWith(prefix) && (!errorMatch[2] || prefix === word)) {
+      const config = colorCompletion(text.slice(0, errorMatch.index).trimEnd());
+      if (config) {
+        const closing = errorMatch[0].startsWith("(") && !errorMatch[2] ? ")" : "";
+        return { ...config, hasError: true, suffix: word.slice(prefix.length) + closing };
+      }
+    }
+  }
+  const memoryMatch = findModelAndMemory(text, (size, prefix) => size.startsWith(prefix));
+  if (memoryMatch) {
+    return { ...memoryMatch, suffix: memoryMatch.memory.slice(memoryMatch.prefix.length) + " Gb" };
+  }
+  return colorCompletion(text);
+}
+modelInput.addEventListener("input", () => {
+  if (editedPart) {
+    const { prefix, suffix } = editedPart;
+    const text = modelInput.value;
+    if (text.length >= prefix.length + suffix.length && text.startsWith(prefix) && text.endsWith(suffix)) {
+      showEditedPartOptions(text.slice(prefix.length, text.length - suffix.length));
+      return;
+    }
+    hideOptions();
+  }
+  const completion = modelCompletion();
+  $("markError").disabled = !batch().model && !completion?.hasError;
+  if (!completion) {
+    clearMemoryGhost();
+    showOptions(modelInput.value);
+    return;
+  }
+  hideOptions();
+  memoryGhostText.replaceChildren(el("span", modelInput.value, "typed"), completion.suffix);
+  memoryGhostText.style.transform = `translateX(-${modelInput.scrollLeft}px)`;
+  memoryGhost.classList.add("visible");
+});
+modelInput.addEventListener("scroll", () => {
+  memoryGhostText.style.transform = `translateX(-${modelInput.scrollLeft}px)`;
+});
+modelInput.addEventListener("selectionchange", () => {
+  if (editedPart) renderPartCompletion();
+  else if (!modelCompletion()) clearMemoryGhost();
+});
+function saveRemovedModelParts(text) {
+  const current = batch();
+  const normalized = text.trim().replace(/\s+/g, " ");
+  if (normalized === modelDisplay(current).trim().replace(/\s+/g, " ")) return false;
+  if (!normalized) {
+    delete current.importedName;
+    delete current.hasError;
+    Object.assign(current, { model: "", memory: "", color: "" });
+    return true;
+  }
+  if (current.importedName) return false;
+  for (const key of ["model", "memory", "color"]) {
+    if (!current[key]) continue;
+    const remaining = { ...current, [key]: "" };
+    const expected = modelDisplay(remaining).trim().replace(/\s+/g, " ");
+    const unitsOnly = key === "memory" && modelDisplay({ ...current, memory: "__memory__" })
+      .replace("__memory__ ", "").trim().replace(/\s+/g, " ") === normalized;
+    if (normalized === expected || unitsOnly) {
+      current[key] = "";
+      return true;
+    }
+  }
+  return false;
+}
+modelInput.addEventListener("blur", () => {
+  const changed = saveRemovedModelParts(modelInput.value);
+  clearMemoryGhost();
+  hideOptions();
+  if (changed) {
+    save();
+    renderSetup();
+    renderSuppliers();
+    return;
+  }
+  modelInput.value = modelDisplay(batch());
+  $("markError").disabled = !batch().model;
+});
+modelInput.addEventListener("keydown", event => {
+  if (modelInput.readOnly || event.isComposing) return;
+  if (event.key === "Tab" && !event.ctrlKey && !event.altKey && !event.metaKey) {
+    if (event.shiftKey) {
+      const previous = modelPartOrder[modelPartOrder.indexOf(editedPart?.key) - 1];
+      if (previous && focusModelPart(previous)) event.preventDefault();
+      return;
+    }
+    const completion = !editedPart && memoryGhost.classList.contains("visible") ? modelCompletion() : null;
+    if (completion) {
+      event.preventDefault();
+      applyModel(completion.spec, completion.memory, completion.color, completion.hasError, completion.color ? undefined : "color");
+      return;
+    }
+    if (!modelOptions.hidden && matches[optionIndex]
+        && (editedPart || (modelSearchKey(modelInput.value) && modelInput.value !== modelDisplay(batch())))) {
+      event.preventDefault();
+      selectOption(optionIndex, true);
+      return;
+    }
+  }
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault();
+    if (modelOptions.hidden) { clearMemoryGhost(); showOptions(modelInput.value, true); }
+    else if (matches.length) highlightOption((optionIndex + (event.key === "ArrowDown" ? 1 : -1) + matches.length) % matches.length);
+  }
+  if (event.key === "Enter" && !modelOptions.hidden) {
+    event.preventDefault();
+    selectOption(optionIndex);
+  }
+  if (event.key === "Escape") {
+    clearMemoryGhost();
+    hideOptions();
+    modelInput.value = modelDisplay(batch());
+  }
+});
+const draftNameInput = $("draftNameInput");
+function closeDraftNameEditor(commit) {
+  if (draftNameInput.hidden) return;
+  const name = draftNameInput.value.trim();
+  if (commit && name && name !== draft().name) {
+    draft().name = name;
+    save();
+    $("draftTitle").textContent = name;
+    document.title = name;
+  }
+  draftNameInput.hidden = true;
+  $("draftName").hidden = false;
+  animateUpdate($("draftName"));
+}
+$("draftName").addEventListener("click", () => {
+  draftNameInput.value = draft().name;
+  draftNameInput.style.width = `clamp(140px, ${Math.ceil($("draftName").getBoundingClientRect().width)}px, 62vw)`;
+  $("draftName").hidden = true;
+  draftNameInput.hidden = false;
+  animateUpdate(draftNameInput);
+  draftNameInput.focus();
+  draftNameInput.setSelectionRange(draftNameInput.value.length, draftNameInput.value.length);
+});
+draftNameInput.addEventListener("blur", () => closeDraftNameEditor(true));
+draftNameInput.addEventListener("keydown", event => {
+  if (event.key === "Enter" || event.key === "Escape") {
+    event.preventDefault();
+    closeDraftNameEditor(event.key === "Enter");
+    $("draftName").focus();
+  }
+});
+$("scan").addEventListener("input", () => scanFeedback());
+$("clearScanInput").onclick = () => {
+  $("scan").value = "";
+  scanFeedback();
+  focusScan();
+};
+$("scanForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const imei = $("scan").value.trim();
+  if (!imei) return;
+  if (!filled()) { scanFeedback("Сначала выбери модель, память и цвет."); return; }
+  if (!imeiPattern.test(imei)) { scanFeedback("IMEI должен состоять из 15 цифр."); $("scan").select(); return; }
+  if (hasImei(imei)) {
+    $("scan").value = "";
+    scanFeedback("Этот IMEI уже есть в добавке.");
+    focusScan();
+    return;
+  }
+  const from = actionRect($("scan"));
+  batch().imeis.push(imei);
+  $("scan").value = "";
+  refresh("IMEI принят.", from);
+  animateAcceptedImei(imei, from);
+});
+$("jumpToLastScan").onclick = () => {
+  const scans = $("scans");
+  const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+  scans.scrollTo({ top: scans.scrollHeight, behavior });
+  focusScan();
+};
+$("undo").onclick = () => removeScan(batch().imeis.length - 1);
+$("markError").addEventListener("mousedown", event => {
+  if (document.activeElement === modelInput && modelCompletion()?.hasError) event.preventDefault();
+});
+$("markError").onclick = () => {
+  const completion = document.activeElement === modelInput ? modelCompletion() : null;
+  if (completion?.hasError) {
+    applyModel(completion.spec, completion.memory, completion.color, true);
+    return;
+  }
+  batch().hasError = !batch().hasError;
+  save();
+  renderSetup();
+  renderSuppliers();
+  animateUpdate(modelInput);
+  if (filled()) focusScan();
+};
+$("configBuffer").onclick = () => {
+  const saved = draft().configBuffer;
+  if (!saved || draft().editIndex !== null || batch().imeis.length) return;
+  delete batch().importedName;
+  Object.assign(batch(), saved, { hasError: Boolean(saved.hasError) });
+  refresh();
+  animateUpdate(modelInput);
+};
+$("clearModel").onclick = () => {
+  const current = batch();
+  delete current.importedName;
+  delete current.hasError;
+  Object.assign(current, { model: "", memory: "", color: "" });
+  clearMemoryGhost();
+  hideOptions();
+  refresh("Название трубки очищено.");
+  animateUpdate(modelInput);
+  modelInput.focus();
+};
+$("clearScans").onclick = async () => {
+  if (!batch().imeis.length || !await askAction("Очистить сканы?", "Все IMEI текущей партии будут удалены.", "Очистить сканы", { danger: true })) return;
+  const scans = $("scans");
+  const rect = actionRect(scans);
+  const scroll = scans.scrollTop;
+  const preview = rect && matchMedia("(prefers-reduced-motion: no-preference)").matches ? scans.cloneNode(true) : null;
+  batch().imeis = [];
+  refresh("Сканы партии очищены.");
+  if (preview) {
+    preview.removeAttribute("id");
+    preview.querySelectorAll("[id]").forEach(node => node.removeAttribute("id"));
+    preview.classList.add("scan-clear-preview");
+    preview.inert = true;
+    preview.setAttribute("aria-hidden", "true");
+    preview.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
+    document.body.append(preview);
+    preview.scrollTop = scroll;
+    preview.animate([
+      { clipPath: "inset(0 round 10px)", opacity: 1 },
+      { clipPath: "inset(0 0 100% 0 round 10px)", opacity: 0.3 }
+    ], { duration: 250, easing: "cubic-bezier(.4,0,.3,1)" }).finished.then(() => preview.remove(), () => preview.remove());
+  }
+};
+$("clearParty").onclick = async () => {
+  if (!await askAction("Очистить партию?", "Название, конфигурация и IMEI текущей партии будут удалены.", "Очистить партию", { danger: true })) return;
+  const before = snapshotBatchCard();
+  draft().batch = newBatch();
+  $("scan").value = "";
+  hideOptions();
+  clearMemoryGhost();
+  refresh("Партия очищена.");
+  animatePartyTransition(before, null);
+};
+$("closeBatch").onclick = async () => {
+  const editing = draft().editIndex !== null;
+  const { model, memory, color, hasError } = batch();
+  const from = snapshotBatchCard();
+  const saved = await closeBatch(true, true);
+  if (!saved) return;
+  if (!editing) draft().configBuffer = { model, memory, color, hasError };
+  refresh("Партия сохранена.");
+  if (saved !== true) animatePartyTransition(from, renderedBatchRows.get(saved));
+};
+$("cancelBatchEdit").onclick = () => {
+  const current = draft();
+  const edit = current.batchEdit;
+  if (!edit) return;
+  const from = snapshotBatchCard();
+  supplier().batches.splice(current.editIndex, 0, edit.original);
+  supplier().batches.sort(compareBatchModels);
+  current.batch = edit.previousBatch;
+  current.active = edit.previousSupplier;
+  current.editIndex = null;
+  delete current.batchEdit;
+  refresh("Правка отменена.");
+  animatePartyTransition(from, renderedBatchRows.get(edit.original));
+};
+async function finishAddition(wantDownload) {
+  const anchor = actionRect(document.activeElement);
+  const snapshot = structuredClone(draft());
+  if (!await closeBatch(false, true)) return;
+  const entry = {
+    name: draft().name.trim() || `Добавка от ${dateLabel(timestamp())}`,
+    date: timestamp(),
+    suppliers: draft().suppliers.filter(group => supplierCount(group) > 0)
+  };
+  if (!entry.suppliers.length) return;
+  let blob;
+  if (wantDownload) {
+    try {
+      blob = createXlsx(entry.suppliers);
+    } catch {
+      state.draft = snapshot;
+      render();
+      notify("Не удалось собрать XLSX. Черновик сохранён.", true, anchor);
+      return;
+    }
+  }
+  const next = { ...state, draft: newDraft(), history: [entry, ...state.history] };
+  if (!save(next)) {
+    state.draft = snapshot;
+    render();
+    notify("История не сохранилась. Черновик всё ещё открыт.", true, anchor);
+    return;
+  }
+  state = next;
+  if (blob) download(blob, fileName(entry.name) + ".xlsx");
+  resizeWorkspaceCards(true);
+  render();
+  notify(blob ? "Добавка сохранена. Файл XLSX сформирован." : "Добавка сохранена в истории.", false, anchor);
+}
+$("saveAddition").onclick = () => finishAddition(false);
+$("finish").onclick = () => finishAddition(true);
+$("workTab").onclick = () => resizeWorkspaceCards(true);
+$("clearDraft").onclick = async () => {
+  if (!await askAction("Очистить добавку?", "Партии, IMEI и поставщики текущей добавки будут удалены.", "Очистить добавку", { danger: true })) return;
+  const next = { ...state, draft: { ...newDraft(), name: draft().name } };
+  if (!save(next)) return;
+  state = next;
+  $("scan").value = "";
+  hideOptions();
+  render();
+  notify("Добавка очищена.");
+  focusScan();
+};
+$("historyBack").onclick = () => setTab(false, returnToStart);
+$("historyTab").onclick = () => {
+  if (!$("history").hidden) {
+    $("historyBack").click();
+    return;
+  }
+  returnToStart = $("workLeft").hidden;
+  setTab(true);
+};
+$("closeDetail").onclick = () => closeHistoryDetail();
+$("detail").addEventListener("close", clearSearchMatch);
+$("detail").addEventListener("cancel", event => {
+  event.preventDefault();
+  closeHistoryDetail();
+});
+function isDetailBackdrop(event) {
+  const dialog = $("detail");
+  if (event.target !== dialog) return false;
+  const { left, right, top, bottom } = dialog.getBoundingClientRect();
+  return event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom;
+}
+let detailBackdropPressed = false;
+$("detail").addEventListener("pointerdown", event => {
+  detailBackdropPressed = isDetailBackdrop(event);
+});
+$("detail").addEventListener("click", event => {
+  const close = detailBackdropPressed && isDetailBackdrop(event);
+  detailBackdropPressed = false;
+  if (close) closeHistoryDetail();
+});
+const deleteSelectedParties = iconAction("Удалить выбранные партии", "remove", deleteSelectedBatches, "danger");
+$("batchSelectionTools").append(deleteSelectedParties);
+const deleteSelection = iconAction("Удалить выбранные", "remove", () => deleteHistory(Array.from(selectedHistory)), "danger");
+deleteSelection.id = "deleteSelectedHistory";
+$("historySelection").append(deleteSelection);
+function setBackupMenu(open) {
+  $("backupMenu").hidden = !open;
+  $("backupMenuButton").setAttribute("aria-expanded", String(open));
+}
+$("backupMenuButton").onclick = () => {
+  const open = $("backupMenu").hidden;
+  setBackupMenu(open);
+  if (open) $("backup").focus();
+};
+document.addEventListener("click", event => {
+  if (!$("backupMenu").hidden && !$("backupActions").contains(event.target)) setBackupMenu(false);
+});
+$("backupActions").addEventListener("keydown", event => {
+  if (event.key !== "Escape" || $("backupMenu").hidden) return;
+  setBackupMenu(false);
+  $("backupMenuButton").focus();
+});
+$("backup").onclick = () => {
+  setBackupMenu(false);
+  $("backupMenuButton").focus();
+  download(new Blob([JSON.stringify(state)], { type: "application/json" }), "dobavka-backup.json");
+};
+$("restore").onclick = () => {
+  setBackupMenu(false);
+  $("backupMenuButton").focus();
+  $("backupFile").click();
+};
+$("backupFile").onchange = async event => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+  try {
+    const restored = validate(JSON.parse(await file.text()));
+    if (!await askAction("Восстановить из копии?", "История и текущий черновик будут заменены данными из выбранного файла.", "Восстановить", { danger: true })) return;
+    const wasLocked = storageLocked;
+    storageLocked = false;
+    if (!save(restored)) { storageLocked = wasLocked; return; }
+    state = restored;
+    render();
+    renderHistory();
+    updateResumeButton();
+  } catch (error) { notify(error.message, true, actionRect($("backupMenuButton"))); }
+};
+document.addEventListener("keydown", event => {
+  if (event.ctrlKey && !event.altKey && !event.shiftKey && !event.metaKey && event.code === "KeyE"
+      && !$("workspace").hidden && !$("workLeft").hidden && !document.querySelector("dialog[open]")
+      && !$("markError").disabled) {
+    event.preventDefault();
+    if (!event.repeat) $("markError").click();
+    return;
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    openSearch();
+    return;
+  }
+  if (event.key === "Escape" && draggingDivider) {
+    finishDividerDrag();
+    return;
+  }
+  if (event.key === "F2" && !$("searchDialog").open && !$("workspace").hidden && !$("workLeft").hidden) {
+    event.preventDefault();
+    focusScan();
+  }
+});
+window.addEventListener("storage", event => {
+  if ((event.key === storageKey || event.key === null) && event.newValue !== event.oldValue) {
+    storageLocked = true;
+    showStorageError("Данные изменились в другой вкладке. Сделай копию этой версии при необходимости и обнови страницу перед продолжением.");
+  }
+});
+function buildStartPreview(workId, startId, slotId, action) {
+  const preview = $(workId).cloneNode(true);
+  preview.removeAttribute("id");
+  const slot = preview.querySelector(`#${slotId}`);
+  const actions = slot.parentElement;
+  actions.style.visibility = "hidden";
+  action.style.visibility = "visible";
+  preview.classList.add("start-preview");
+  preview.querySelectorAll("[id], [for], [aria-controls], [aria-describedby]").forEach(node => {
+    for (const attribute of ["id", "for", "aria-controls", "aria-describedby"]) node.removeAttribute(attribute);
+  });
+  preview.querySelectorAll("button, input").forEach(node => node.disabled = true);
+  for (const node of preview.querySelectorAll("*")) {
+    if (node.closest("button, input, .badge")) continue;
+    for (const text of Array.from(node.childNodes)) {
+      if (text.nodeType !== Node.TEXT_NODE || !text.textContent.trim()) continue;
+      const mask = el("span", text.textContent, "placeholder-label");
+      mask.setAttribute("aria-hidden", "true");
+      text.replaceWith(mask);
+    }
+  }
+  actions.append(action);
+  $(startId).replaceChildren(preview);
+}
+
+const currentDraft = state.draft;
+state.draft = newDraft();
+render();
+const startNew = button("Новая добавка", startNewDraft, "primary start-action");
+startNew.id = "newDraftButton";
+function resizeWorkspaceCards(drafts) {
+  if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    setTab(false, drafts);
+    return;
+  }
+  const cards = Array.from($("workspace").querySelectorAll(".card"));
+  const startHeights = cards.map(card => card.getBoundingClientRect().height);
+  setTab(false, drafts);
+  const endHeights = cards.map(card => card.getBoundingClientRect().height);
+  cards.forEach((card, index) => {
+    const from = startHeights[index];
+    const to = endHeights[index];
+    if (Math.abs(from - to) < 1) return;
+    const animation = card.animate([
+      { height: `${from}px`, overflow: "clip" },
+      { height: `${to}px`, overflow: "clip" }
+    ], { duration: 360, easing: "cubic-bezier(.22,.72,.25,1)" });
+    animation.id = "workspace-card-size";
+  });
+}
+const startResume = button("", () => {
+  workContext = "draft";
+  resizeWorkspaceCards(false);
+}, "primary start-action resume-action");
+startResume.id = "resumeDraft";
+const bufferName = el("small");
+bufferName.id = "bufferName";
+startResume.append(el("span", "Продолжить добавку", "resume-label"), bufferName);
+buildStartPreview("workLeft", "startLeft", "closeBatch", startNew);
+buildStartPreview("workRight", "startRight", "finish", startResume);
+state.draft = currentDraft;
+render();
+const leftCard = $("workLeft").closest(".card");
+const leftCardObserver = new ResizeObserver(([entry]) => {
+  const height = entry.borderBoxSize[0].blockSize;
+  if (height > 0) $("workspace").style.setProperty("--left-card-height", `${height}px`);
+});
+leftCardObserver.observe(leftCard, { box: "border-box" });
+const workspaceHeader = document.querySelector("header.top");
+function fitWorkspaceCards() {
+  const header = workspaceHeader.getBoundingClientRect();
+  const margin = Number.parseFloat(getComputedStyle(workspaceHeader).marginBottom);
+  const top = header.bottom + window.scrollY + margin;
+  $("workspace").style.setProperty("--workspace-card-limit", `max(0px, calc(100dvh - ${top + 12}px))`);
+}
+new ResizeObserver(fitWorkspaceCards).observe(workspaceHeader);
+window.addEventListener("resize", fitWorkspaceCards);
+fitWorkspaceCards();
+setTab(false, true);
+const fadeLists = document.querySelectorAll("#scans, #suppliers, #colors, #modelOptions, #searchResults");
+function updateScrollFade(list) {
+  const overflow = list.scrollHeight - list.clientHeight;
+  const fadeDepth = Math.min(28, list.clientHeight / 3);
+  const top = Math.max(0, Math.min(fadeDepth, list.scrollTop * 3));
+  const bottom = Math.max(0, Math.min(fadeDepth, (overflow - list.scrollTop) * 3));
+  list.classList.toggle("scroll-fade", list.clientHeight > 0 && overflow > 1);
+  list.style.setProperty("--fade-top", `${top}px`);
+  list.style.setProperty("--fade-bottom", `${bottom}px`);
+}
+const fadeResizeObserver = new ResizeObserver(entries => {
+  for (const { target } of entries) updateScrollFade(target);
+});
+const fadeContentObserver = new MutationObserver(records => {
+  const changed = new Set(records.map(record => record.target.closest("#scans, #suppliers, #colors, #modelOptions, #searchResults")));
+  for (const list of changed) if (list) updateScrollFade(list);
+});
+for (const list of fadeLists) {
+  list.addEventListener("scroll", () => updateScrollFade(list), { passive: true });
+  fadeResizeObserver.observe(list);
+  fadeContentObserver.observe(list, { childList: true, subtree: true });
+}
+
+
+</script>
+</body>
+</html>
