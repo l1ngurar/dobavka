@@ -7,3 +7,7 @@ services:
     volumes:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./favicon.svg:/usr/share/nginx/html/favicon.svg:ro
+      - ./manifest.webmanifest:/usr/share/nginx/html/manifest.webmanifest:ro
+      - ./pwa.js:/usr/share/nginx/html/pwa.js:ro
+      - ./sw.js:/usr/share/nginx/html/sw.js:ro
+      - ./icons:/usr/share/nginx/html/icons:ro

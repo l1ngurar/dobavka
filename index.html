@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Добавка</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<meta name="theme-color" content="#007aff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Добавка">
 <style>
 :root{--type-title:25px;--type-heading:17px;--type-body:15px;--type-control:14px;--type-label:13px;--type-meta:12px;--type-context:10px;
 color-scheme:light;--page:#f2f2f7;--surface:#fff;--soft:#f2f2f7;--text:#17171a;--muted:#636366;--line:#dedee5;--blue:#0069dd;--blue-soft:#e7f1ff;--red:#b92529;--green:#14743e}
@@ -94,7 +99,7 @@ input:not([type=checkbox]):focus,select:focus{outline:0;border-color:var(--blue)
 .memory-ghost .typed{color:transparent}
 #model.part-completion{color:transparent;caret-color:var(--text)}
 .memory-ghost .committed{color:var(--text)}
-@media(prefers-reduced-motion:no-preference){.memory-ghost{transition:opacity 140ms ease}}
+@media(prefers-reduced-motion:no-preference){.memory-ghost .suggestion{display:inline-block;animation:completion-in 150ms ease-out}@keyframes completion-in{from{opacity:0;transform:translateX(3px)}to{opacity:1;transform:none}}}
 @media (prefers-reduced-motion: no-preference) {
   .chips button { transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
 }
@@ -390,7 +395,7 @@ small{font-size:var(--type-meta)}
 <small>Копия включает историю, текущий черновик, имена поставщиков и IMEI.</small>
 </div>
 <input id="backupFile" type="file" accept=".json,application/json" hidden>
-</div><button id="clearDraft" class="nav-icon nav-tool" aria-label="Очистить добавку" title="Очистить добавку" inert><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button></div><button id="openSearch" class="nav-icon" aria-label="Поиск" title="Поиск (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></button><button id="historyTab" class="nav-icon" aria-label="История" title="История"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></button></nav>
+</div><button id="clearDraft" class="nav-icon nav-tool" aria-label="Очистить добавку" title="Очистить добавку" inert><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button></div><button id="installApp" class="nav-icon" type="button" aria-label="Установить Добавку" title="Установить Добавку" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8m-4-5v5m0-15v7m-3-3 3 3 3-3"/></svg></button><button id="openSearch" class="nav-icon" aria-label="Поиск" title="Поиск (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></button><button id="historyTab" class="nav-icon" aria-label="История" title="История"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></button></nav>
 </header>
 <section id="workspace" class="layout" hidden>
 <div>
@@ -419,7 +424,7 @@ small{font-size:var(--type-meta)}
 <div class="row scan-tools"><button class="quiet" id="jumpToLastScan" data-scan-jump aria-controls="scans">К последнему <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><button class="quiet" id="undo">Убрать последний</button><button class="quiet danger" id="clearScans">Очистить сканы</button></div>
 </div>
 </section>
-<div class="row actions batch-footer"><button id="closeBatch" class="primary">Следующая партия</button><button id="cancelBatchEdit" class="quiet" hidden>Отменить правку</button><span class="badge" id="batchCount"></span></div>
+<div class="row actions batch-footer"><button id="closeBatch" class="primary">Готово</button><button id="cancelBatchEdit" class="quiet" hidden>Отменить правку</button><span class="badge" id="batchCount"></span></div>
 </div>
 </section>
 <div id="scanToastSlot"></div>
@@ -1679,8 +1684,15 @@ function scanFeedback(message = "") {
 }
 function filled() { return Boolean(batch().importedName || (batch().model && batch().memory && batch().color)); }
 const foldColor = value => value.toLowerCase().replace(/ё/g, "е");
+const englishColorNames = {
+  "черный": ["black"], "белый": ["white", "silver"], "синий": ["blue"],
+  "зеленый": ["green"], "желтый": ["yellow"], "красный": ["red"],
+  "фиолетовый": ["purple", "violet"], "розовый": ["pink"], "золотой": ["gold"],
+  "титан": ["titanium"], "пустынный": ["desert"], "коралловый": ["coral"],
+  "оранжевый": ["orange"]
+};
 function colorSearchNames(model, label) {
-  const names = [foldColor(label)];
+  const names = [foldColor(label), ...(englishColorNames[foldColor(label)] ?? [])];
   if (label === "пустынный" && model.startsWith("iPhone 16 Pro")) names.push("десерт");
   if (label === "золотой" && /^iPhone (11|12|13|14) Pro/.test(model)) names.push("желтый");
   return names;
@@ -1753,7 +1765,7 @@ function renderScans() {
   const editing = draft().editIndex !== null;
   $("batchHeading").textContent = editing ? "Правка партии" : "Текущая партия";
   $("clearParty").disabled = !current.model && !current.imeis.length;
-  $("closeBatch").textContent = editing ? "Сохранить правку" : "Следующая партия";
+  $("closeBatch").textContent = editing ? "Сохранить правку" : "Готово";
   $("closeBatch").disabled = !current.imeis.length;
   $("cancelBatchEdit").hidden = !draft().batchEdit;
   const buffer = draft().configBuffer;
@@ -2375,9 +2387,19 @@ function editSavedBatch(group, item) {
 function snapshotBatchCard() {
   if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return null;
   const card = $("workLeft").closest(".card");
+  card.getAnimations().find(animation => animation.id === "party-card-in")?.cancel();
   const rect = actionRect(card);
   if (!rect) return null;
   const snapshot = card.cloneNode(true);
+  const originals = card.querySelectorAll("*");
+  snapshot.querySelectorAll("*").forEach((node, index) => {
+    const original = originals[index];
+    const style = getComputedStyle(original);
+    for (const property of style) node.style.setProperty(property, style.getPropertyValue(property));
+    node.style.animation = "none";
+    node.style.transition = "none";
+    if (original.scrollTop) node.dataset.snapshotScrollTop = original.scrollTop;
+  });
   snapshot.querySelector("#startLeft")?.remove();
   snapshot.querySelectorAll("[id], [for], [aria-controls], [aria-describedby]").forEach(node => {
     for (const attribute of ["id", "for", "aria-controls", "aria-describedby"]) node.removeAttribute(attribute);
@@ -2396,17 +2418,19 @@ function animatePartyTransition(previousCard, row, editing = false) {
   const ease = "cubic-bezier(.22,.72,.25,1)";
   if (previousCard) {
     document.body.append(previousCard);
+    previousCard.querySelectorAll("[data-snapshot-scroll-top]").forEach(node => {
+      node.scrollTop = Number(node.dataset.snapshotScrollTop);
+    });
     const leave = previousCard.animate([
       { opacity: 1, transform: "none" },
-      { opacity: 0.78, transform: "translateY(-3px) scale(.99)", offset: 0.33 },
-      { opacity: 0, transform: "translateY(-15px) scale(.96)" }
-    ], { duration: 320, easing: "cubic-bezier(.4,0,.3,1)", fill: "forwards" });
+      { opacity: 0, transform: "translateY(-6px)" }
+    ], { duration: 180, easing: "cubic-bezier(.4,0,.3,1)", fill: "forwards" });
     leave.finished.then(() => previousCard.remove(), () => previousCard.remove());
   }
   const cardIn = card.animate([
-    { opacity: editing ? 0.45 : 0.7, transform: `translateY(${editing ? 15 : 8}px) scale(.985)` },
+    { opacity: previousCard ? 0 : 0.45, transform: `translateY(${editing ? 15 : 6}px)` },
     { opacity: 1, transform: "none" }
-  ], { duration: editing ? 390 : 330, delay: previousCard ? 65 : 0, fill: "backwards", easing: ease });
+  ], { duration: editing ? 390 : 260, delay: previousCard ? 180 : 0, fill: "backwards", easing: ease });
   cardIn.id = "party-card-in";
   if (row) row.animate([
     { opacity: 0.62, transform: `translateX(${editing ? -5 : -12}px)` },
@@ -3385,7 +3409,21 @@ function highlightOption(index) {
   }
   if (editedPart) renderPartCompletion();
 }
+function russianKeyboardText(text) {
+  const latin = "qwertyuiop[]asdfghjkl;'zxcvbnm,.";
+  const russian = "йцукенгшщзхъфывапролджэячсмитьбю";
+  return text.toLowerCase().replace(/[a-z\[\];',.]/g, letter => russian[latin.indexOf(letter)]);
+}
 function modelSearchKey(text) {
+  const original = normalizeModelKey(text);
+  const key = original.replace(/^iphone/, "");
+  if (!key || catalog.some(spec => normalizeModelKey(spec.name).replace(/^iphone/, "").startsWith(key))) return original;
+  const corrected = normalizeModelKey(russianKeyboardText(text));
+  const correctedKey = corrected.replace(/^iphone/, "");
+  return catalog.some(spec => normalizeModelKey(spec.name).replace(/^iphone/, "").startsWith(correctedKey))
+    ? corrected : original;
+}
+function normalizeModelKey(text) {
   return text.toLowerCase().replace(/\s+/g, "")
     .replace(/айф[oо]н/g, "iphone")
     .replace(/икс(?:[эе]с|[сs])/g, "xs")
@@ -3396,8 +3434,8 @@ function modelSearchKey(text) {
     .replace(/макс|мах/g, "max")
     .replace(/х/g, "x")
     .replace(/про/g, "pro")
-    .replace(/(\d)пм$/g, "$1promax")
-    .replace(/(\d)п$/g, "$1pro")
+    .replace(/(\d)[пp][мm]$/g, "$1promax")
+    .replace(/(\d)[пp]$/g, "$1pro")
     .replace(/плюс/g, "plus")
     .replace(/мини/g, "mini")
     .replace(/э[ий]р|аир/g, "air")
@@ -3457,9 +3495,10 @@ function showEditedPartOptions(query, selected = "") {
     return;
   }
   const prefix = key === "memory" ? query.trim().replace(/\s*(?:gb|гб)$/i, "") : foldColor(query.trim());
+  const colorPrefixes = [prefix, foldColor(russianKeyboardText(query.trim()))];
   const options = key === "memory"
     ? spec.memory.filter(size => size.startsWith(prefix)).map(memory => ({ spec, memory, label: memory + " ГБ" }))
-    : spec.colors.filter(color => colorSearchNames(spec.name, color.label).some(name => name.startsWith(prefix)))
+    : spec.colors.filter(color => colorSearchNames(spec.name, color.label).some(name => colorPrefixes.some(value => name.startsWith(value))))
       .map(color => ({ spec, color: color.label, label: color.label }));
   const selectedIndex = options.findIndex(option => (option.memory || option.color) === selected);
   if (selectedIndex > 0) options.unshift(...options.splice(selectedIndex, 1));
@@ -3533,8 +3572,8 @@ function renderPartCompletion() {
   }
   const keepsPrefix = label.toLowerCase().startsWith(typed.toLowerCase());
   memoryGhostText.replaceChildren(
-    el("span", prefix + (keepsPrefix ? typed : ""), "committed"),
-    keepsPrefix ? label.slice(typed.length) : label,
+    el("span", prefix + typed, "committed"),
+    el("span", keepsPrefix ? label.slice(typed.length) : " → " + label, "suggestion"),
     el("span", suffix, "committed")
   );
   memoryGhostText.style.transform = `translateX(-${modelInput.scrollLeft}px)`;
@@ -3555,27 +3594,30 @@ function findModelAndMemory(text, matchMemory) {
   return null;
 }
 function colorCompletion(text) {
-  const colorPrefix = text.match(/[а-яё]+$/i)?.[0];
+  const colorPrefix = text.match(/[a-zа-яё\[\];',.]+$/i)?.[0];
   if (!colorPrefix) return null;
   const beforeColor = text.slice(0, -colorPrefix.length).trim().replace(/\s*(?:gb|гб)$/i, "").trim();
   const config = findModelAndMemory(beforeColor, (size, prefix) => size === prefix);
   if (!config) return null;
-  const prefix = foldColor(colorPrefix);
+  const prefixes = [foldColor(colorPrefix), foldColor(russianKeyboardText(colorPrefix))];
   for (const color of config.spec.colors) {
-    const matched = colorSearchNames(config.spec.name, color.label).find(name => name.startsWith(prefix));
+    const matched = colorSearchNames(config.spec.name, color.label).find(name => prefixes.some(prefix => name.startsWith(prefix)));
     if (!matched) continue;
     const display = matched === foldColor(color.label) ? color.label : matched;
-    return { ...config, color: color.label, suffix: display.slice(colorPrefix.length) };
+    const keepsPrefix = matched.startsWith(foldColor(colorPrefix));
+    const suffix = keepsPrefix ? display.slice(colorPrefix.length) : "";
+    const translated = !keepsPrefix || /[a-z]/i.test(colorPrefix);
+    return { ...config, color: color.label, suffix: suffix + (translated ? " → " + color.label : "") };
   }
   return null;
 }
 function modelCompletion() {
   const text = modelInput.value;
   if (modelInput.selectionStart !== text.length || modelInput.selectionEnd !== text.length) return null;
-  const errorMatch = text.match(/\(?(ош[а-яё]*)(\)?)$/i);
+  const errorMatch = text.match(/\(?((?:ош|ji)[a-zа-яё\[\];',.]*)(\)?)$/i);
   if (errorMatch) {
     const word = "ошибка";
-    const prefix = errorMatch[1].toLowerCase();
+    const prefix = /^ji/i.test(errorMatch[1]) ? russianKeyboardText(errorMatch[1]) : errorMatch[1].toLowerCase();
     if (word.startsWith(prefix) && (!errorMatch[2] || prefix === word)) {
       const config = colorCompletion(text.slice(0, errorMatch.index).trimEnd());
       if (config) {
@@ -3608,7 +3650,7 @@ modelInput.addEventListener("input", () => {
     return;
   }
   hideOptions();
-  memoryGhostText.replaceChildren(el("span", modelInput.value, "typed"), completion.suffix);
+  memoryGhostText.replaceChildren(el("span", modelInput.value, "typed"), el("span", completion.suffix, "suggestion"));
   memoryGhostText.style.transform = `translateX(-${modelInput.scrollLeft}px)`;
   memoryGhost.classList.add("visible");
 });
@@ -4104,5 +4146,6 @@ for (const list of fadeLists) {
 
 
 </script>
+<script src="./pwa.js"></script>
 </body>
 </html>
