@@ -34,7 +34,7 @@ input:not([type=checkbox]):focus,select:focus{outline:0;border-color:var(--blue)
 }
 .start-preview .scan input::placeholder{color:transparent}.badge{display:inline-block;border-radius:999px;padding:3px 9px;background:var(--soft);font-size:var(--type-label);font-weight:650}.items{list-style:none;padding:0;margin:8px 0 0;max-height:215px;overflow:auto}.item{padding:8px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.item button{padding:5px 9px}.mono{font-family:ui-monospace,Consolas,monospace}.stack{margin-top:12px}.stack details{border-top:1px solid var(--line);padding:10px 0}.stack details:first-child{border:0}.stack summary{cursor:pointer;font-weight:650}.stack p{margin:6px 0}.actions{margin-top:13px}.notice{min-height:1.4em;margin-top:8px;color:var(--green)}.notice.error{color:var(--red)}.history-list{display:grid;gap:12px}.history-list .card{margin:0}.history-items{overflow-wrap:anywhere}dialog{width:min(640px,92vw);max-height:80vh;border:1px solid var(--line);border-radius:20px;padding:22px;background:var(--surface);color:var(--text)}dialog::backdrop{background:#0007}
 @media(width < 879px){.shell{max-width:680px;padding:16px}.layout{grid-template-columns:1fr}.top{margin-bottom:15px}}
-.model-field{position:relative}.model-field input{width:100%}.options{position:absolute;z-index:5;top:100%;left:0;width:min(100%,16rem);max-height:260px;overflow:auto;scrollbar-gutter:stable;margin:5px 0 0;padding:5px 10px 5px 5px;list-style:none;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 8px 24px #0002}.options li{padding:7px 10px;border-radius:8px;cursor:pointer}.options li[aria-selected=true],.options li:hover{background:var(--blue-soft);color:var(--blue)}.title-button,.supplier-name{padding:0;border:0;background:none;text-align:left}.title-button:hover{text-decoration:underline;text-decoration-color:var(--blue)}button.supplier-name:hover{background:var(--blue-soft);border-radius:5px}.supplier-line{display:flex;align-items:center;gap:9px;min-height:34px;margin:5px 0;padding:4px 8px;border-radius:8px;color:var(--muted);box-shadow:inset 0 0 0 1px transparent}.supplier-line::after{content:"";flex:1;border-top:1px solid var(--line)}.supplier-line.active{color:var(--blue)}.supplier-name{font-size:var(--type-label)}.batch-line{padding:5px 0}.batch-name{overflow-wrap:anywhere}.batch-active{color:var(--blue)}.rename-mark{font-size:.6em;margin-left:7px;color:var(--muted);vertical-align:middle}
+.model-field{position:relative}.model-field input{width:100%}.model-options-popup{position:absolute;z-index:5;top:100%;left:0;width:min(100%,16rem);margin-top:5px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 8px 24px #0002;overflow:hidden}.options{max-height:260px;overflow:auto;scrollbar-width:none;overscroll-behavior:contain;margin:0;padding:5px;list-style:none;background:var(--surface)}.options::-webkit-scrollbar{display:none}.model-options-thumb{position:absolute;right:3px;top:0;width:6px;border-radius:6px;background:color-mix(in srgb,var(--muted) 52%,transparent);opacity:0;cursor:grab;touch-action:none}.model-options-popup:hover .model-options-thumb,.model-options-popup.is-scrolling .model-options-thumb,.model-options-popup.is-dragging .model-options-thumb{opacity:1}.model-options-popup.is-dragging .model-options-thumb{cursor:grabbing}.options li{padding:7px 10px;border-radius:8px;cursor:pointer}.options li[aria-selected=true],.options li:hover{background:var(--blue-soft);color:var(--blue)}.title-button,.supplier-name{padding:0;border:0;background:none;text-align:left}.title-button:hover{text-decoration:underline;text-decoration-color:var(--blue)}button.supplier-name:hover{background:var(--blue-soft);border-radius:5px}.supplier-line{display:flex;align-items:center;gap:9px;min-height:34px;margin:5px 0;padding:4px 8px;border-radius:8px;color:var(--muted);box-shadow:inset 0 0 0 1px transparent}.supplier-line::after{content:"";flex:1;border-top:1px solid var(--line)}.supplier-line.active{color:var(--blue)}.supplier-name{font-size:var(--type-label)}.batch-line{padding:5px 0}.batch-name{overflow-wrap:anywhere}.batch-active{color:var(--blue)}.rename-mark{font-size:.6em;margin-left:7px;color:var(--muted);vertical-align:middle}
 .title-input{width:min(420px,62vw);font:inherit;letter-spacing:inherit;padding:3px 8px}.imei-edit{flex:1;min-width:0}.imei-edit input{flex:1 1 22ch;width:22ch;min-width:min(100%,21ch);max-width:min(100%,28ch);padding:5px 8px}.imei-edit .notice{flex-basis:100%;min-height:0;margin:0}.imei-edit .notice:empty{display:none}
 @media (prefers-reduced-motion: no-preference) {
   .title-input:not([hidden]) { animation: editor-appear 160ms ease-out; }
@@ -233,8 +233,8 @@ input:not([type=checkbox]):focus,select:focus{outline:0;border-color:var(--blue)
 .divider-slot.is-drop-point::before{opacity:1}
 @media(prefers-reduced-motion:no-preference){
   .scan-item,.scan-code,.remove-scan{transition:background-color 190ms ease,border-color 190ms ease,color 190ms ease}
-  .options:not([hidden]){animation:model-options-in 220ms cubic-bezier(.22,.72,.25,1) both;transform-origin:top center}
-  @keyframes model-options-in{from{opacity:0;transform:translateY(-5px) scaleY(.97)}to{opacity:1;transform:none}}
+  .model-options-popup:not([hidden]){animation:model-options-in 180ms cubic-bezier(.22,.72,.25,1) both;transform-origin:top center}.model-options-thumb{transition:opacity 180ms ease}
+  @keyframes model-options-in{from{transform:translateY(-4px)}to{transform:none}}
   .divider-slot{transition:height 180ms ease}
   .divider-slot::before{transition:opacity 160ms ease}
 }
@@ -404,7 +404,7 @@ small{font-size:var(--type-meta)}
 <div id="workLeft">
 <div class="spread"><h2 id="batchHeading">Текущая партия</h2><button id="clearParty" class="quiet danger">Очистить партию</button></div>
 <div class="setup">
-<div class="field wide model-field"><div class="model-label-row"><label class="label" for="model">Название трубки</label><span class="error-control"><kbd aria-hidden="true">Ctrl+E</kbd><button id="markError" class="error-flag" type="button" aria-keyshortcuts="Control+E" title="Ctrl+E" aria-pressed="false">Ошибка</button></span></div><span class="model-entry"><input id="model" role="combobox" aria-autocomplete="both" aria-controls="modelOptions" aria-expanded="false" autocomplete="off" placeholder="Начни вводить модель, например 16 Pro"><span id="memoryGhost" class="memory-ghost" aria-hidden="true"><span id="memoryGhostText"></span></span><button type="button" id="clearModel" class="clear-model" aria-label="Очистить название трубки" title="Очистить название трубки"></button></span><ul class="options" id="modelOptions" role="listbox" hidden></ul></div>
+<div class="field wide model-field"><div class="model-label-row"><label class="label" for="model">Название трубки</label><span class="error-control"><kbd aria-hidden="true">Ctrl+E</kbd><button id="markError" class="error-flag" type="button" aria-keyshortcuts="Control+E" title="Ctrl+E" aria-pressed="false">Ошибка</button></span></div><span class="model-entry"><input id="model" role="combobox" aria-autocomplete="both" aria-controls="modelOptions" aria-expanded="false" autocomplete="off" placeholder="Начни вводить модель, например 16 Pro"><span id="memoryGhost" class="memory-ghost" aria-hidden="true"><span id="memoryGhostText"></span></span><button type="button" id="clearModel" class="clear-model" aria-label="Очистить название трубки" title="Очистить название трубки"></button></span><div class="model-options-popup" id="modelOptionsPanel" hidden><ul class="options" id="modelOptions" role="listbox" hidden></ul><div class="model-options-thumb" id="modelOptionsThumb" aria-hidden="true" hidden></div></div></div>
 <div id="configBufferSlot" class="wide config-buffer-slot" inert><div class="config-buffer-inner"><button id="configBuffer" class="quiet config-buffer"></button></div></div>
 <div class="field"><span>Память</span><div class="chips" id="memories"></div></div>
 <div class="field"><span>Цвет</span><div class="chips color-grid" id="colors"></div></div>
@@ -3346,6 +3346,46 @@ function modelDisplay(item) {
 }
 const modelInput = $("model");
 const modelOptions = $("modelOptions");
+const modelOptionsPanel = $("modelOptionsPanel");
+const modelOptionsThumb = $("modelOptionsThumb");
+let modelScrollTimer;
+function updateModelScrollbar() {
+  const height = modelOptions.clientHeight;
+  const overflow = modelOptions.scrollHeight - height;
+  modelOptionsThumb.hidden = modelOptions.hidden || overflow <= 1;
+  if (modelOptionsThumb.hidden) return;
+  const thumbHeight = Math.max(24, (height - 8) * height / modelOptions.scrollHeight);
+  modelOptionsThumb.style.height = thumbHeight + "px";
+  modelOptionsThumb.style.top = 4 + (height - 8 - thumbHeight) * modelOptions.scrollTop / overflow + "px";
+}
+modelOptions.addEventListener("scroll", () => {
+  updateModelScrollbar();
+  modelOptionsPanel.classList.add("is-scrolling");
+  clearTimeout(modelScrollTimer);
+  modelScrollTimer = setTimeout(() => modelOptionsPanel.classList.remove("is-scrolling"), 700);
+}, { passive: true });
+new ResizeObserver(updateModelScrollbar).observe(modelOptions);
+modelOptionsThumb.addEventListener("pointerdown", event => {
+  if (event.button !== 0) return;
+  event.preventDefault();
+  modelOptionsThumb.setPointerCapture(event.pointerId);
+  modelOptionsPanel.classList.add("is-dragging");
+  const startY = event.clientY;
+  const startScroll = modelOptions.scrollTop;
+  const travel = modelOptions.clientHeight - 8 - modelOptionsThumb.offsetHeight;
+  modelOptionsThumb.onpointermove = move => {
+    if (travel > 0) modelOptions.scrollTop = startScroll +
+      (move.clientY - startY) * (modelOptions.scrollHeight - modelOptions.clientHeight) / travel;
+  };
+});
+modelOptionsThumb.addEventListener("pointerup", event => {
+  modelOptionsThumb.releasePointerCapture(event.pointerId);
+});
+modelOptionsThumb.addEventListener("lostpointercapture", () => {
+  modelOptionsThumb.onpointermove = null;
+  modelOptionsPanel.classList.remove("is-dragging");
+});
+
 let matches = [];
 let optionIndex = -1;
 let editedPart = null;
@@ -3353,6 +3393,7 @@ function hideOptions() {
   if (editedPart) clearMemoryGhost();
   editedPart = null;
   modelOptions.hidden = true;
+  $("modelOptionsPanel").hidden = true;
   modelInput.setAttribute("aria-expanded", "false");
   modelInput.removeAttribute("aria-activedescendant");
 }
@@ -3479,8 +3520,10 @@ function showPartOptions(options) {
     return node;
   }) : [el("li", "Модель не найдена", "muted")]));
   modelOptions.hidden = false;
+  $("modelOptionsPanel").hidden = false;
   modelInput.setAttribute("aria-expanded", "true");
   highlightOption(matches.length ? 0 : -1);
+  updateModelScrollbar();
 }
 modelInput.addEventListener("dblclick", event => {
   if (modelInput.readOnly) return;
